@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Pitts Stop Auto"
+description = "A bold, responsive automotive repair website for Pitts Stop Auto with five navigable pages, service discovery, estimate capture, and an interactive repair-bay hero experience."
+version = "1.0.0"
+id = "artifacts/pitts-stop-auto"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21848
+
+[services.development]
+run = "pnpm --filter @workspace/pitts-stop-auto run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/pitts-stop-auto", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/pitts-stop-auto/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21848"
+BASE_PATH = "/"
