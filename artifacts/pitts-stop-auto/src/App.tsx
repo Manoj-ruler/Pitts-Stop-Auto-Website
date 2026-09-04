@@ -1,15 +1,17 @@
-import { type FormEvent, type ReactNode, useEffect, useState } from 'react';
+import { createContext, type FormEvent, type ReactNode, useContext, useEffect, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { ArrowDownRight, ArrowRight, Check, ChevronDown, CircleAlert, Clock3, Crosshair, Gauge, Hammer, Menu, MoveRight, Phone, ShieldCheck, Sparkles, X, Wrench, Zap } from 'lucide-react';
+import { ArrowDownRight, ArrowRight, Check, ChevronDown, CircleAlert, Clock3, Crosshair, Gauge, Hammer, Menu, Moon, MoveRight, Phone, ShieldCheck, Sparkles, Sun, X, Wrench, Zap } from 'lucide-react';
 import { Link, Route, Switch, Router as WouterRouter, useLocation } from 'wouter';
 import NotFound from '@/pages/not-found';
 import heroGarage from './assets/garage-hero.jpg';
 import detailGarage from './assets/garage-detail.jpg';
 
 const queryClient = new QueryClient();
+type Theme = 'dark' | 'light';
+const ThemeContext = createContext<{ theme: Theme; toggle: () => void }>({ theme: 'dark', toggle: () => undefined });
 
 type HotspotId = 'brakes' | 'engine' | 'diagnostics';
 
@@ -37,6 +39,7 @@ function useMeta(title: string, description: string) {
 function Header() {
   const [location] = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { theme, toggle } = useContext(ThemeContext);
   const active = (href: string) => href === '/' ? location === '/' : location.startsWith(href);
 
   return (
@@ -61,6 +64,9 @@ function Header() {
             ))}
           </nav>
           <div className="hidden items-center gap-3 lg:flex">
+            <button type="button" onClick={toggle} className="focus-ring grid h-11 w-11 place-items-center border border-white/15 text-foreground transition-colors hover:border-primary hover:text-primary" aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`} aria-pressed={theme === 'light'} data-testid="button-theme-toggle">
+              {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+            </button>
             <Link href="/contact#estimate" className="focus-ring inline-flex items-center gap-2 border border-white/20 px-4 py-3 text-[11px] font-bold uppercase tracking-[.12em] text-foreground transition-colors hover:border-primary hover:bg-primary" data-testid="link-header-estimate">
               Request an estimate <ArrowRight size={14} />
             </Link>
@@ -74,7 +80,12 @@ function Header() {
         <div className="fixed inset-0 z-50 bg-[hsl(220_14%_5%/.96)] lg:hidden" role="dialog" aria-modal="true" aria-label="Mobile navigation">
           <div className="flex h-[76px] items-center justify-between border-b border-white/10 px-5">
             <span className="eyebrow text-primary">Pitts Stop Auto / Navigation</span>
-            <button type="button" className="focus-ring grid h-11 w-11 place-items-center border border-white/15" onClick={() => setMenuOpen(false)} aria-label="Close navigation menu" data-testid="button-close-menu"><X size={21} /></button>
+            <div className="flex items-center gap-2">
+              <button type="button" onClick={toggle} className="focus-ring grid h-11 w-11 place-items-center border border-white/15 text-foreground" aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`} aria-pressed={theme === 'light'} data-testid="button-mobile-theme-toggle">
+                {theme === 'dark' ? <Sun size={17} /> : <Moon size={17} />}
+              </button>
+              <button type="button" className="focus-ring grid h-11 w-11 place-items-center border border-white/15" onClick={() => setMenuOpen(false)} aria-label="Close navigation menu" data-testid="button-close-menu"><X size={21} /></button>
+            </div>
           </div>
           <nav className="flex flex-col px-5 pt-10" aria-label="Mobile navigation links">
             {navItems.map((item, i) => (
@@ -294,7 +305,19 @@ function Router() {
 }
 
 function App() {
-  return <QueryClientProvider client={queryClient}><TooltipProvider><WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}><Router /></WouterRouter><Toaster /></TooltipProvider></QueryClientProvider>;
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window === 'undefined') return 'dark';
+    const previewTheme = new URLSearchParams(window.location.search).get('theme');
+    if (previewTheme === 'light' || previewTheme === 'dark') return previewTheme;
+    return window.localStorage.getItem('pitts-stop-theme') === 'light' ? 'light' : 'dark';
+  });
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    document.documentElement.classList.toggle('light', theme === 'light');
+    document.documentElement.style.colorScheme = theme;
+    window.localStorage.setItem('pitts-stop-theme', theme);
+  }, [theme]);
+  return <ThemeContext.Provider value={{ theme, toggle: () => setTheme((current) => current === 'dark' ? 'light' : 'dark') }}><QueryClientProvider client={queryClient}><TooltipProvider><WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}><Router /></WouterRouter><Toaster /></TooltipProvider></QueryClientProvider></ThemeContext.Provider>;
 }
 
 export default App;
