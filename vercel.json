@@ -1,0 +1,10 @@
+{
+  "buildCommand": "pnpm --filter @workspace/pitts-stop-auto run build",
+  "outputDirectory": "artifacts/pitts-stop-auto/dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
