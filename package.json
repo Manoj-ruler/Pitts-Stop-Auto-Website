@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "dev": "pnpm --filter @workspace/pitts-stop-auto run dev",
+    "start": "pnpm --filter @workspace/pitts-stop-auto run dev",
+    "serve": "pnpm --filter @workspace/pitts-stop-auto run serve",
     "preinstall": "npx --yes only-allow pnpm",
     "build": "pnpm run typecheck && pnpm -r --if-present run build",
     "typecheck:libs": "tsc --build",
