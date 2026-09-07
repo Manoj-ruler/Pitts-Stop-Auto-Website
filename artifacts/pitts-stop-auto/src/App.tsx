@@ -36,6 +36,7 @@ import NotFound from '@/pages/not-found';
 import heroGarage from './assets/garage-hero.jpg';
 import detailGarage from './assets/garage-detail.jpg';
 import logoImg from './assets/logo.png';
+import whatsappImg from './assets/whatsapp.png';
 
 const queryClient = new QueryClient();
 type Theme = 'dark' | 'light';
@@ -266,8 +267,38 @@ function Footer() {
   );
 }
 
+function FloatingWhatsApp() {
+  return (
+    <aside aria-label="WhatsApp Contact" className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-50">
+      <a
+        href="https://wa.me/14126825255"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Chat with Pitts Stop Auto on WhatsApp: (412) 682-5255"
+        className="group relative flex items-center justify-center focus-ring rounded-full transition-all duration-300 hover:scale-110 active:scale-95"
+        data-testid="link-floating-whatsapp"
+      >
+        <span className="pointer-events-none absolute right-full mr-3 hidden whitespace-nowrap rounded-md bg-[#111416]/95 border border-white/15 px-3 py-1.5 text-xs font-semibold text-white shadow-xl backdrop-blur-md opacity-0 group-hover:opacity-100 sm:inline-block transition-opacity duration-200">
+          Chat with us on WhatsApp · (412) 682-5255
+        </span>
+        <span className="absolute -inset-1 rounded-full bg-[#25D366] opacity-35 blur-md group-hover:opacity-75 transition-opacity animate-pulse" />
+        <img
+          src={whatsappImg}
+          alt="WhatsApp"
+          className="relative h-14 w-14 sm:h-16 sm:w-16 rounded-full object-contain drop-shadow-[0_8px_20px_rgba(0,0,0,0.45)]"
+        />
+      </a>
+    </aside>
+  );
+}
+
 function Shell({ children }: { children: ReactNode }) {
-  return <div className="noise min-h-[100dvh] overflow-x-hidden">{children}</div>;
+  return (
+    <div className="noise min-h-[100dvh] overflow-x-hidden">
+      {children}
+      <FloatingWhatsApp />
+    </div>
+  );
 }
 
 function PageFrame({ children, title, description }: { children: ReactNode; title: string; description: string }) {
