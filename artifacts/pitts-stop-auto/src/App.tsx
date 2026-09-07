@@ -34,6 +34,7 @@ import { Link, Route, Switch, Router as WouterRouter, useLocation } from 'wouter
 import NotFound from '@/pages/not-found';
 import heroGarage from './assets/garage-hero.jpg';
 import detailGarage from './assets/garage-detail.jpg';
+import logoImg from './assets/logo.png';
 
 const queryClient = new QueryClient();
 type Theme = 'dark' | 'light';
@@ -73,12 +74,14 @@ function Header() {
       <header className="sticky top-0 z-30 border-b border-white/10 bg-[hsl(220_14%_8%/.92)] backdrop-blur-md">
         <div className="mx-auto flex h-[76px] max-w-[1320px] items-center justify-between px-5 lg:px-10">
           <Link href="/" onClick={() => setMenuOpen(false)} className="focus-ring group flex items-center gap-3" data-testid="link-brand">
-            <span className="relative grid h-10 w-10 place-items-center border border-primary/80 bg-primary font-display text-xl font-bold text-primary-foreground">
-              PS<span className="absolute -bottom-1 -right-1 h-2 w-2 bg-accent" />
-            </span>
-            <span className="leading-tight">
-              <span className="block font-display text-[20px] sm:text-[22px] font-semibold tracking-[.04em] text-foreground">PITTS STOP AUTO</span>
-              <span className="eyebrow block text-[9px] text-primary">CAR CARE CENTER</span>
+            <img
+              src={logoImg}
+              alt="Pitts Stop Auto Logo"
+              className="h-11 sm:h-13 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
+            />
+            <span className="leading-tight hidden min-[360px]:block">
+              <span className="block font-display text-[18px] sm:text-[21px] font-semibold tracking-[.04em] text-foreground">PITTS STOP AUTO</span>
+              <span className="eyebrow block text-[8px] sm:text-[9px] text-primary">CAR CARE CENTER</span>
             </span>
           </Link>
           <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary navigation">
@@ -129,9 +132,12 @@ function Header() {
       {menuOpen && (
         <div className="fixed inset-0 z-50 bg-[hsl(220_14%_5%/.96)] lg:hidden" role="dialog" aria-modal="true" aria-label="Mobile navigation">
           <div className="flex h-[76px] items-center justify-between border-b border-white/10 px-5">
-            <div>
-              <span className="font-display text-lg tracking-[.04em] block text-foreground">PITTS STOP AUTO</span>
-              <span className="eyebrow text-[9px] text-primary block">CAR CARE CENTER</span>
+            <div className="flex items-center gap-2.5">
+              <img src={logoImg} alt="Pitts Stop Auto Logo" className="h-10 w-auto object-contain" />
+              <div>
+                <span className="font-display text-lg tracking-[.04em] block text-foreground">PITTS STOP AUTO</span>
+                <span className="eyebrow text-[9px] text-primary block">CAR CARE CENTER</span>
+              </div>
             </div>
             <div className="flex items-center gap-2">
               <button
@@ -200,8 +206,8 @@ function Footer() {
     <footer className="border-t border-white/10 bg-[hsl(220_14%_6%)]">
       <div className="mx-auto grid max-w-[1320px] gap-12 px-5 py-14 md:grid-cols-[1.2fr_.7fr_.7fr] lg:px-10">
         <div>
-          <div className="mb-5 flex items-center gap-3">
-            <span className="grid h-9 w-9 place-items-center bg-primary font-display text-lg font-bold text-primary-foreground">PS</span>
+          <div className="mb-5 flex items-center gap-3.5">
+            <img src={logoImg} alt="Pitts Stop Auto Logo" className="h-12 sm:h-14 w-auto object-contain" />
             <div>
               <span className="font-display text-xl tracking-[.04em] block text-foreground">PITTS STOP AUTO</span>
               <span className="eyebrow text-[9px] text-primary block">CAR CARE CENTER</span>
@@ -566,8 +572,13 @@ function HomePage() {
 
           <div className="flex flex-col justify-between border border-white/15 bg-[#111416] p-6 sm:p-8">
             <div>
-              <p className="eyebrow mb-3 text-accent">Pittsburgh Car Care Center</p>
-              <h3 className="font-display text-3xl uppercase">Pitts Stop Auto</h3>
+              <div className="mb-5 flex items-center gap-3 border-b border-white/10 pb-4">
+                <img src={logoImg} alt="Pitts Stop Auto Logo" className="h-12 w-auto object-contain" />
+                <div>
+                  <p className="eyebrow text-accent">Pittsburgh Car Care Center</p>
+                  <h3 className="font-display text-2xl uppercase">Pitts Stop Auto</h3>
+                </div>
+              </div>
               <div className="mt-6 space-y-4 text-sm text-muted-foreground">
                 <div className="flex items-start gap-3">
                   <MapPin className="mt-0.5 shrink-0 text-primary" size={18} />
@@ -1202,7 +1213,10 @@ function ContactPage() {
         <div className="space-y-10">
           <div>
             <SectionLabel index="02">Location & Details</SectionLabel>
-            <h2 className="font-display text-4xl uppercase mb-6">CONTACT INFORMATION</h2>
+            <div className="mb-6 flex items-center gap-3">
+              <img src={logoImg} alt="Pitts Stop Auto Logo" className="h-12 w-auto object-contain" />
+              <h2 className="font-display text-4xl uppercase">CONTACT INFORMATION</h2>
+            </div>
             <div className="space-y-6 text-sm">
               <div className="flex gap-4">
                 <MapPin className="shrink-0 text-primary" size={20} />
