@@ -4,6 +4,13 @@ import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import {
   ArrowDownRight,
   ArrowRight,
   Check,
@@ -428,7 +435,146 @@ function HotspotBay() {
   );
 }
 
+function SpecialsModal({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-w-2xl sm:max-w-3xl border border-white/15 bg-card text-card-foreground p-6 sm:p-8">
+        <DialogHeader className="text-left space-y-2">
+          <div className="flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-primary" />
+            <span className="eyebrow text-primary font-bold">CURRENT SERVICE SPECIALS</span>
+          </div>
+          <DialogTitle className="font-display text-3xl sm:text-4xl uppercase tracking-tight text-foreground">
+            EXCLUSIVE SHOP SPECIAL OFFERS
+          </DialogTitle>
+          <DialogDescription className="text-sm text-muted-foreground">
+            Save on essential vehicle maintenance at Pitts Stop Auto. Mention these specials when calling or scheduling your visit.
+          </DialogDescription>
+        </DialogHeader>
+
+        <div className="grid gap-5 sm:grid-cols-2 mt-2">
+          {/* SPECIAL 1: FULL SYNTHETIC OIL & FILTER */}
+          <div className="relative flex flex-col justify-between border-2 border-primary/40 bg-primary/5 p-6 rounded-md hover:border-primary transition-colors">
+            <div>
+              <div className="flex items-center justify-between gap-2 mb-3">
+                <span className="inline-flex items-center gap-1.5 rounded bg-primary/10 px-2.5 py-1 font-mono-ui text-[10px] font-bold uppercase tracking-wider text-primary border border-primary/20">
+                  <Sparkles size={12} /> Oil Service Special
+                </span>
+                <span className="eyebrow text-accent font-semibold">SPECIAL OFFER</span>
+              </div>
+              <h3 className="font-display text-2xl uppercase tracking-tight text-foreground">
+                Full Synthetic Oil & Filter
+              </h3>
+              <div className="my-4 flex items-baseline gap-2">
+                <span className="font-display text-4xl sm:text-5xl font-bold text-primary tracking-tight">$85</span>
+                <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">and above</span>
+              </div>
+              <ul className="space-y-2 text-xs text-muted-foreground border-t border-border pt-4">
+                <li className="flex items-start gap-2">
+                  <Check size={14} className="text-primary mt-0.5 shrink-0" />
+                  <span>Full synthetic motor oil service</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check size={14} className="text-primary mt-0.5 shrink-0" />
+                  <span>New premium oil filter installation</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check size={14} className="text-primary mt-0.5 shrink-0" />
+                  <span>Comprehensive 20-point vehicle safety check</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check size={14} className="text-primary mt-0.5 shrink-0" />
+                  <span>Vital fluids inspection & courtesy top-off</span>
+                </li>
+              </ul>
+            </div>
+            <p className="mt-4 text-[10px] text-muted-foreground/80 italic border-t border-border/60 pt-2">
+              *$85 and above depending on vehicle engine oil capacity and filter specifications.
+            </p>
+          </div>
+
+          {/* SPECIAL 2: BRAKE PADS & ROTORS WITH WARRANTY */}
+          <div className="relative flex flex-col justify-between border-2 border-accent/40 bg-accent/5 p-6 rounded-md hover:border-accent transition-colors">
+            <div>
+              <div className="flex items-center justify-between gap-2 mb-3">
+                <span className="inline-flex items-center gap-1.5 rounded bg-accent/15 px-2.5 py-1 font-mono-ui text-[10px] font-bold uppercase tracking-wider text-accent border border-accent/30">
+                  <ShieldCheck size={12} /> Brake Care Package
+                </span>
+                <span className="eyebrow text-primary font-semibold">WARRANTY INCLUDED</span>
+              </div>
+              <h3 className="font-display text-2xl uppercase tracking-tight text-foreground">
+                Brake Pads & Rotors
+              </h3>
+              <div className="my-4 flex items-baseline gap-2">
+                <span className="font-display text-4xl sm:text-5xl font-bold text-accent tracking-tight">$425</span>
+                <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">and above</span>
+              </div>
+              <div className="mb-4 inline-flex items-center gap-1.5 rounded bg-primary/10 border border-primary/25 px-3 py-1.5 text-xs font-bold text-primary">
+                <ShieldCheck size={14} className="shrink-0" />
+                <span>1 Year / 12,000 Miles Warranty</span>
+              </div>
+              <ul className="space-y-2 text-xs text-muted-foreground border-t border-border pt-4">
+                <li className="flex items-start gap-2">
+                  <Check size={14} className="text-accent mt-0.5 shrink-0" />
+                  <span>Premium replacement brake pads (front or rear)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check size={14} className="text-accent mt-0.5 shrink-0" />
+                  <span>Precision replacement brake rotors</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check size={14} className="text-accent mt-0.5 shrink-0" />
+                  <span>Complete 1 Year / 12,000 Miles Warranty coverage</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check size={14} className="text-accent mt-0.5 shrink-0" />
+                  <span>Hardware inspection, brake line check & road test</span>
+                </li>
+              </ul>
+            </div>
+            <p className="mt-4 text-[10px] text-muted-foreground/80 italic border-t border-border/60 pt-2">
+              *Starting from $425 and above based on vehicle make, model, and axle specifications.
+            </p>
+          </div>
+        </div>
+
+        {/* FOOTER ACTIONS */}
+        <div className="mt-5 border-t border-border pt-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="text-xs text-muted-foreground text-center sm:text-left">
+            <span className="font-semibold text-foreground block">Pitts Stop Auto · 4734 Baum Blvd, Pittsburgh PA</span>
+            <span>Mon–Fri: 8:00 AM – 6:00 PM · Closed Sat & Sun</span>
+          </div>
+          <div className="flex flex-wrap gap-2.5 w-full sm:w-auto justify-center sm:justify-end">
+            <a
+              href="tel:+14126825255"
+              className="focus-ring inline-flex items-center gap-2 bg-primary px-5 py-3 text-xs font-bold uppercase tracking-[.12em] text-primary-foreground hover:bg-[#d7352d] transition-colors"
+            >
+              <Phone size={14} /> Call (412) 682-5255
+            </a>
+            <a
+              href="https://wa.me/14126825255?text=Hi%20Pitts%20Stop%20Auto%2C%20I%20would%20like%20to%20claim%20one%20of%20your%20current%20service%20specials!"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="focus-ring inline-flex items-center gap-2 border border-border bg-card px-4 py-3 text-xs font-bold uppercase tracking-[.12em] text-foreground hover:border-primary hover:text-primary transition-colors"
+            >
+              WhatsApp
+            </a>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 function HomePage() {
+  const [specialsModalOpen, setSpecialsModalOpen] = useState(false);
+
   return (
     <PageFrame
       title="Car Care Center"
@@ -482,19 +628,21 @@ function HomePage() {
               <h2 className="font-display text-3xl uppercase tracking-tight text-foreground sm:text-4xl">
                 SEE OUR SPECIAL OFFERS NOW
               </h2>
-              <p className="mt-2 text-sm text-muted-foreground">
-                Inquire with Noor Khan and our team today about our latest seasonal service offers and specials.
+              <p className="mt-2 text-sm text-muted-foreground max-w-2xl">
+                Featuring <span className="text-foreground font-semibold">Full Synthetic Oil & Filter ($85 and above)</span> and <span className="text-foreground font-semibold">Brake Pads & Rotors with 1-Year / 12,000-Mile Warranty ($425 and above)</span>.
               </p>
             </div>
-            <Link
-              href="/contact#estimate"
-              className="focus-ring shrink-0 inline-flex items-center gap-3 bg-primary px-6 py-4 text-xs font-bold uppercase tracking-[.14em] text-primary-foreground hover:bg-[#d7352d] transition-colors"
+            <button
+              type="button"
+              onClick={() => setSpecialsModalOpen(true)}
+              className="focus-ring shrink-0 inline-flex items-center gap-3 bg-primary px-6 py-4 text-xs font-bold uppercase tracking-[.14em] text-primary-foreground hover:bg-[#d7352d] transition-colors cursor-pointer"
               data-testid="button-home-specials"
             >
               SPECIALS <ArrowRight size={15} />
-            </Link>
+            </button>
           </div>
         </div>
+        <SpecialsModal open={specialsModalOpen} onOpenChange={setSpecialsModalOpen} />
       </section>
 
       {/* OUR SERVICES PREVIEW */}
