@@ -26,6 +26,7 @@ import {
   Sparkles,
   Sun,
   UserCheck,
+  Wifi,
   Wrench,
   X,
   Zap,
@@ -100,6 +101,9 @@ function Header() {
             ))}
           </nav>
           <div className="hidden items-center gap-3 lg:flex">
+            <span className="hidden xl:inline-flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground border border-white/10 px-3 py-2.5">
+              <Clock3 size={13} className="text-primary" /> Mon–Fri 8AM–6PM
+            </span>
             <button
               type="button"
               onClick={toggle}
@@ -232,6 +236,13 @@ function Footer() {
           <p className="eyebrow mb-5 text-foreground">At the shop</p>
           <div className="text-sm leading-7 text-muted-foreground space-y-1.5">
             <p>Address: <span className="text-foreground">4734 Baum Blvd, Pittsburgh PA 15213</span></p>
+            <div className="border-y border-white/10 py-2 my-2 text-xs leading-5">
+              <p className="font-semibold text-foreground flex items-center gap-1.5 mb-1">
+                <Clock3 size={13} className="text-primary" /> Operating Hours
+              </p>
+              <p className="text-muted-foreground">Mon – Fri: <span className="text-foreground font-medium">8:00 AM – 6:00 PM</span></p>
+              <p className="text-muted-foreground">Sat & Sun: <span className="text-foreground font-medium">Closed</span></p>
+            </div>
             <p>Telephone: <a href="tel:+14126825255" className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline" data-testid="link-footer-phone">(412) 682-5255</a></p>
             <p>Fax: <span className="text-foreground">(412) 682-5252</span></p>
             <p>Email: <a href="mailto:customers@pittsstopauto.com" className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline" data-testid="link-footer-email">customers@pittsstopauto.com</a></p>
@@ -411,7 +422,7 @@ function HomePage() {
             <div className="mt-10 flex items-center gap-4 border-l border-primary pl-4">
               <ShieldCheck size={20} className="shrink-0 text-accent" />
               <p className="text-xs leading-5 text-muted-foreground">
-                Professional ethics · Quality service · Customer care<br />
+                Domestic & Foreign · State Inspection · Minor & Major Repairs<br />
                 <span className="text-foreground">4734 Baum Blvd, Pittsburgh PA 15213 · (412) 682-5255</span>
               </p>
             </div>
@@ -479,7 +490,7 @@ function HomePage() {
             </div>
             <h3 className="font-display text-2xl uppercase">Minor repairs</h3>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              Oil change with 20-point checks, state inspections (safety & emissions), diagnostics, tune-ups, brake systems, air conditioning, and heating systems.
+              Oil change with 20-point checks, official PA state inspections (safety & emissions), brake service, exhaust & muffler repairs, and A/C service.
             </p>
           </div>
 
@@ -490,7 +501,7 @@ function HomePage() {
             </div>
             <h3 className="font-display text-2xl uppercase">Diagnostics</h3>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              Front and rear suspension, timing belts, water pumps, electrical systems, tire repair, good-condition used tires (80% tread), and used-car buying advice.
+              Check engine light diagnosis, electrical & battery repair, steering & suspension, timing belts, tire service, and used-car inspections.
             </p>
           </div>
 
@@ -501,7 +512,7 @@ function HomePage() {
             </div>
             <h3 className="font-display text-2xl uppercase">Most car makes</h3>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              Import and domestic cars or small trucks. Specialty in European cars (Volvo, SAAB, Audi, VW, Jaguar, Land/Range Rover) and Asian makes (Honda, Toyota, Mazda, Nissan).
+              Domestic & foreign cars, small trucks, classic cars, and hybrid vehicles. European specialties (Volvo, SAAB, Audi, VW) & Asian makes (Honda, Toyota, Nissan).
             </p>
           </div>
 
@@ -512,7 +523,7 @@ function HomePage() {
             </div>
             <h3 className="font-display text-2xl uppercase">Major Repairs</h3>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              Engine removal & replacement (used or rebuilt), head gasket & valve jobs, transmission/transaxle replacement (used or rebuilt), and clutches.
+              Engine service & replacement (used or rebuilt), transmission service & replacement, head gasket & valve jobs, and clutch replacement.
             </p>
           </div>
         </div>
@@ -588,6 +599,14 @@ function HomePage() {
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
+                  <Clock3 className="mt-0.5 shrink-0 text-primary" size={18} />
+                  <div>
+                    <span className="font-semibold text-foreground block">Shop Hours</span>
+                    <p>Mon – Fri: <span className="text-foreground font-medium">8:00 AM – 6:00 PM</span></p>
+                    <p>Sat & Sun: <span className="text-foreground font-medium">Closed</span></p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
                   <Phone className="mt-0.5 shrink-0 text-primary" size={18} />
                   <div>
                     <span className="font-semibold text-foreground block">Telephone</span>
@@ -611,6 +630,21 @@ function HomePage() {
                       customers@pittsstopauto.com
                     </a>
                   </div>
+                </div>
+              </div>
+
+              <div className="mt-6 pt-5 border-t border-white/10">
+                <span className="eyebrow text-accent block mb-2.5">Shop Amenities</span>
+                <div className="flex flex-wrap gap-2 text-xs">
+                  <span className="inline-flex items-center gap-1.5 rounded border border-white/10 bg-white/5 px-2.5 py-1 text-muted-foreground">
+                    <Check size={12} className="text-accent" /> Restroom
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded border border-white/10 bg-white/5 px-2.5 py-1 text-muted-foreground">
+                    <Check size={12} className="text-accent" /> Gender-neutral restroom
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded border border-white/10 bg-white/5 px-2.5 py-1 text-muted-foreground">
+                    <Wifi size={12} className="text-accent" /> Free WiFi
+                  </span>
                 </div>
               </div>
             </div>
@@ -785,13 +819,14 @@ const servicesData = [
   {
     id: 'makes',
     title: 'Most car makes',
-    subtitle: 'Import & domestic coverage and European specialties',
+    subtitle: 'Domestic & foreign coverage, European specialties, classic & hybrid vehicles',
     icon: <Wrench size={22} />,
-    description: 'Import and domestic cars or small trucks.',
-    specialty: 'Specialty: Most European cars such as Volvo, SAAB, Audi, and VW, as well as Honda, Toyota, Mazda, Nissan, Jaguar, and Land/Range Rover.',
+    description: 'Pitts Stop Auto services domestic and foreign cars, small trucks, classic cars, and modern hybrid vehicles.',
+    specialty: 'Specialty: European cars (Volvo, SAAB, Audi, VW, Jaguar, Land/Range Rover), Asian makes (Honda, Toyota, Mazda, Nissan), classic cars, and hybrid vehicle diagnostics.',
     items: [
-      'Import cars and small trucks',
-      'Domestic cars and small trucks',
+      'Domestic & Foreign cars and small trucks',
+      'Classic cars and vintage vehicle service & repair',
+      'Hybrid cars service, system diagnostics & battery maintenance',
       'European specialty: Volvo, SAAB, Audi, VW',
       'Asian makes: Honda, Toyota, Mazda, Nissan',
       'European luxury: Jaguar, Land/Range Rover',
@@ -800,18 +835,17 @@ const servicesData = [
   {
     id: 'diagnostics',
     title: 'Diagnostics',
-    subtitle: 'Component evaluation & more minor repair/services',
+    subtitle: 'Check engine light, electrical, battery & suspension diagnostics',
     icon: <Gauge size={22} />,
-    description: 'Thorough inspection and component diagnostics to pinpoint issues and provide clear guidance.',
+    description: 'Thorough computerized inspection and component diagnostics to pinpoint issues accurately before any work begins.',
     items: [
-      'Front suspension systems and components (Springs, Struts, Tie rods, Ball joints, Steering system)',
-      'Rear suspension systems',
-      'Timing belts',
-      'Water pumps',
-      'Electrical systems (Batteries, Alternators, Starters, Lights, and more electrical components)',
-      'Tire repair',
-      'Good-condition used tires (source states 80% tread)',
-      'Used-car buying advice (Check and advise you for buying used cars)',
+      'Check engine light diagnosis & computerized system scans',
+      'Electrical repair & wiring troubleshooting (Alternators, starters, lighting)',
+      'Battery service, charging system testing & battery replacement',
+      'Steering & suspension service (Front/rear springs, struts, tie rods, ball joints, steering racks)',
+      'Timing belts and water pumps',
+      'Tire service & repair, plus good-condition used tires (80% tread)',
+      'Used-car pre-purchase inspections & buying advice',
     ],
   },
   {
@@ -819,28 +853,28 @@ const servicesData = [
     title: 'Major Repairs',
     subtitle: 'Powertrain, transmission & mechanical overhauls',
     icon: <Hammer size={22} />,
-    description: 'Major repair/services for engines, transmissions, and critical mechanical drivetrains.',
+    description: 'Major repair services for engines, transmissions, and critical drivetrain mechanicals.',
     items: [
-      'Engine removal and replacement (Used or rebuilt engines)',
-      'Head gasket and valve work',
-      'Transmission / transaxle removal and replacement (Used or rebuilt units)',
-      'Clutch service',
+      'Engine service & repair: engine removal and replacement (Used or rebuilt engines)',
+      'Transmission service & repair: removal and replacement (Used or rebuilt units)',
+      'Head gasket and cylinder head valve work',
+      'Clutch service, flywheels, and manual gearbox repair',
     ],
   },
   {
     id: 'minor',
     title: 'Minor repairs',
-    subtitle: 'Essential maintenance, inspections & safety checks',
+    subtitle: 'Inspections, brakes, exhaust, oil & climate control',
     icon: <Sparkles size={22} />,
-    description: 'Minor repair/services to keep your vehicle running smoothly, safely, and comfortably.',
+    description: 'Essential maintenance and minor repairs to keep your vehicle running smoothly, safely, and cleanly.',
     items: [
-      'Oil change with 20-point checks',
-      'State inspection (Safety & emissions)',
-      'Diagnostics (Engine, drivability, electrical & more)',
-      'Tune-ups',
-      'Brake system service (Pads, rotors, calipers & delivery system)',
+      'Oil change with comprehensive 20-point safety check',
+      'Vehicle inspections: Pennsylvania state safety & emissions inspections',
+      'Brake service & repair (Pads, rotors, drums, calipers & hydraulic lines)',
+      'Exhaust & muffler service (Muffler replacement, exhaust pipes, catalytic converters)',
       'Air conditioning check, repair, and recharge',
-      'Heating system check and repair',
+      'Heating system check and climate control repairs',
+      'Tune-ups, fluid exchanges & preventative maintenance',
     ],
   },
 ];
@@ -963,8 +997,20 @@ function WhyUsPage() {
   const [open, setOpen] = useState<number | null>(0);
   const faqs = [
     [
+      'What are your shop operating hours?',
+      'Pitts Stop Auto is open Monday through Friday from 8:00 AM to 6:00 PM. We are closed on Saturday and Sunday.',
+    ],
+    [
       'What car makes and models do you service?',
-      'We service import and domestic cars and small trucks. Our specialty includes European cars such as Volvo, SAAB, Audi, VW, Jaguar, and Land/Range Rover, as well as Asian makes including Honda, Toyota, Mazda, and Nissan.',
+      'We service domestic and foreign cars, small trucks, classic cars, and hybrid vehicles. Our specialty includes European cars such as Volvo, SAAB, Audi, VW, Jaguar, and Land/Range Rover, as well as Asian makes including Honda, Toyota, Mazda, and Nissan.',
+    ],
+    [
+      'Do you service classic cars and hybrid vehicles?',
+      'Yes! Pitts Stop Auto proudly services classic cars and vintage vehicles as well as modern hybrid models with dedicated diagnostics and repairs.',
+    ],
+    [
+      'Do you offer exhaust and muffler repair services?',
+      'Yes, we provide full exhaust & muffler service including muffler replacement, exhaust pipes, catalytic converters, and emissions fixes.',
     ],
     [
       'Do you offer used-car buying advice and inspections?',
@@ -976,7 +1022,11 @@ function WhyUsPage() {
     ],
     [
       'Do you perform Pennsylvania state inspections?',
-      'Yes, we provide official Pennsylvania safety and emission state inspections.',
+      'Yes, we provide official Pennsylvania safety and emissions state inspections.',
+    ],
+    [
+      'What amenities are available at the shop?',
+      'We provide a comfortable waiting area with clean restrooms (including gender-neutral restroom access) and free customer WiFi.',
     ],
     [
       'Do you sell used tires or perform tire repairs?',
@@ -1226,6 +1276,14 @@ function ContactPage() {
                 </div>
               </div>
               <div className="flex gap-4">
+                <Clock3 className="shrink-0 text-primary" size={20} />
+                <div>
+                  <p className="eyebrow mb-1 text-foreground">Shop Hours</p>
+                  <p className="text-muted-foreground">Monday – Friday: <span className="text-foreground font-medium">8:00 AM – 6:00 PM</span></p>
+                  <p className="text-muted-foreground">Saturday – Sunday: <span className="text-foreground font-medium">Closed</span></p>
+                </div>
+              </div>
+              <div className="flex gap-4">
                 <Phone className="shrink-0 text-primary" size={20} />
                 <div>
                   <p className="eyebrow mb-1 text-foreground">Telephone</p>
@@ -1256,6 +1314,21 @@ function ContactPage() {
                   >
                     customers@pittsstopauto.com
                   </a>
+                </div>
+              </div>
+
+              <div className="mt-8 pt-6 border-t border-white/15">
+                <p className="eyebrow mb-3 text-accent">Customer Amenities</p>
+                <div className="flex flex-wrap gap-2 text-xs">
+                  <span className="inline-flex items-center gap-1.5 rounded border border-white/10 bg-white/5 px-3 py-1.5 text-muted-foreground">
+                    <Check size={13} className="text-accent" /> Restroom
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded border border-white/10 bg-white/5 px-3 py-1.5 text-muted-foreground">
+                    <Check size={13} className="text-accent" /> Gender-neutral restroom
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 rounded border border-white/10 bg-white/5 px-3 py-1.5 text-muted-foreground">
+                    <Wifi size={13} className="text-accent" /> Free WiFi
+                  </span>
                 </div>
               </div>
             </div>
