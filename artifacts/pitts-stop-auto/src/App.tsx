@@ -1320,20 +1320,42 @@ function WhyUsPage() {
 }
 
 function EstimateForm() {
-  const [form, setForm] = useState({ name: '', contact: '', vehicle: '', message: '' });
+  const [form, setForm] = useState({ name: '', email: '', vehicle: '', message: '' });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [lastMailto, setLastMailto] = useState('');
 
   const update = (field: keyof typeof form, value: string) => setForm((current) => ({ ...current, [field]: value }));
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
     const next: Record<string, string> = {};
-    if (!form.name.trim()) next.name = 'Please tell us your name.';
-    if (!form.contact.trim()) next.contact = 'Add a phone number or email so we can reply.';
-    if (!form.message.trim()) next.message = 'A few words about the vehicle helps us start.';
+    if (!form.name.trim()) next.name = 'Please enter your name.';
+    if (!form.email.trim()) {
+      next.email = 'Please enter your email address.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) {
+      next.email = 'Please enter a valid email address.';
+    }
+    if (!form.message.trim()) next.message = 'Please describe the service or diagnostic you need.';
     setErrors(next);
-    if (!Object.keys(next).length) setSubmitted(true);
+
+    if (!Object.keys(next).length) {
+      const subject = encodeURIComponent(`Estimate / Service Inquiry - ${form.name.trim()}`);
+      const body = encodeURIComponent(
+        `Hello Pitts Stop Auto,\n\n` +
+        `I would like to request an estimate / service inquiry.\n\n` +
+        `Customer Details:\n` +
+        `• Name: ${form.name.trim()}\n` +
+        `• Email: ${form.email.trim()}\n` +
+        `• Vehicle: ${form.vehicle.trim() || 'Not specified'}\n\n` +
+        `Service / Diagnostic Needed:\n${form.message.trim()}\n\n` +
+        `Best regards,\n${form.name.trim()}`
+      );
+      const mailtoUrl = `mailto:customers@pittsstopauto.com?subject=${subject}&body=${body}`;
+      setLastMailto(mailtoUrl);
+      setSubmitted(true);
+      window.location.href = mailtoUrl;
+    }
   };
 
   if (submitted) {
@@ -1342,22 +1364,37 @@ function EstimateForm() {
         <div className="mb-6 grid h-12 w-12 place-items-center bg-accent text-accent-foreground">
           <Check size={24} />
         </div>
-        <p className="eyebrow mb-3 text-accent">Request received</p>
+        <p className="eyebrow mb-3 text-accent">Request prepared</p>
         <h3 className="font-display text-4xl uppercase">Thank you, {form.name}.</h3>
         <p className="mt-4 max-w-md text-sm leading-7 text-muted-foreground">
-          We have received your message. For immediate assistance or urgent scheduling, please call our shop directly at <a href="tel:+14126825255" className="text-foreground underline font-semibold">(412) 682-5255</a>.
+          We have generated your pre-filled inquiry addressed to <a href="mailto:customers@pittsstopauto.com" className="font-semibold text-foreground underline">customers@pittsstopauto.com</a>. Your email client should open automatically.
         </p>
-        <button
-          type="button"
-          onClick={() => {
-            setSubmitted(false);
-            setForm({ name: '', contact: '', vehicle: '', message: '' });
-          }}
-          className="focus-ring mt-8 border-b border-accent pb-1 text-xs font-bold uppercase tracking-[.12em] text-accent"
-          data-testid="button-new-estimate"
-        >
-          Send another message
-        </button>
+        <p className="mt-2 max-w-md text-sm leading-7 text-muted-foreground">
+          If your email app did not open automatically, click the button below to launch it directly, or call us at <a href="tel:+14126825255" className="text-foreground underline font-semibold">(412) 682-5255</a>.
+        </p>
+        <div className="mt-6 flex flex-wrap items-center gap-4">
+          {lastMailto && (
+            <a
+              href={lastMailto}
+              className="focus-ring inline-flex items-center gap-2 bg-primary px-5 py-3 text-xs font-bold uppercase tracking-[.12em] text-primary-foreground hover:bg-[#d7352d] transition-colors"
+              data-testid="link-open-email-client"
+            >
+              <Mail size={15} /> Open Email Client
+            </a>
+          )}
+          <button
+            type="button"
+            onClick={() => {
+              setSubmitted(false);
+              setForm({ name: '', email: '', vehicle: '', message: '' });
+              setLastMailto('');
+            }}
+            className="focus-ring border-b border-accent pb-1 text-xs font-bold uppercase tracking-[.12em] text-accent hover:text-accent/80 transition-colors"
+            data-testid="button-new-estimate"
+          >
+            Send another message
+          </button>
+        </div>
       </div>
     );
   }
@@ -1365,12 +1402,44 @@ function EstimateForm() {
   return (
     <form onSubmit={submit} noValidate className="space-y-5" id="estimate" data-testid="form-estimate">
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Your name" value={form.name} onChange={(v) => update('name', v)} error={errors.name} required testId="input-name" />
-        <Field label="Phone or email" value={form.contact} onChange={(v) => update('contact', v)} error={errors.contact} required testId="input-contact" />
+        <Field
+          label="Your name"
+          placeholder="e.g. John Doe"
+          value={form.name}
+          onChange={(v) => update('name', v)}
+          error={errors.name}
+          required
+          testId="input-name"
+        />
+        <Field
+          label="Your email"
+          type="email"
+          placeholder="e.g. name@example.com"
+          value={form.email}
+          onChange={(v) => update('email', v)}
+          error={errors.email}
+          required
+          testId="input-email"
+        />
       </div>
-      <Field label="Vehicle (year / make / model)" value={form.vehicle} onChange={(v) => update('vehicle', v)} testId="input-vehicle" />
-      <Field label="What service or diagnostic do you need?" value={form.message} onChange={(v) => update('message', v)} error={errors.message} required textarea testId="input-message" />
-      <div className="flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-5 sm:flex-row sm:items-center">
+      <Field
+        label="Vehicle (year / make / model)"
+        placeholder="e.g. 2018 Honda Civic"
+        value={form.vehicle}
+        onChange={(v) => update('vehicle', v)}
+        testId="input-vehicle"
+      />
+      <Field
+        label="What service or diagnostic do you need?"
+        placeholder="Describe the issue, inspection, or service needed..."
+        value={form.message}
+        onChange={(v) => update('message', v)}
+        error={errors.message}
+        required
+        textarea
+        testId="input-message"
+      />
+      <div className="flex flex-col items-start justify-between gap-4 border-t border-border pt-5 sm:flex-row sm:items-center">
         <p className="max-w-xs text-[11px] leading-5 text-muted-foreground">
           You can also call us directly at <a href="tel:+14126825255" className="text-foreground underline">(412) 682-5255</a> during shop hours.
         </p>
@@ -1394,6 +1463,8 @@ function Field({
   required,
   textarea,
   testId,
+  type = 'text',
+  placeholder,
 }: {
   label: string;
   value: string;
@@ -1402,6 +1473,8 @@ function Field({
   required?: boolean;
   textarea?: boolean;
   testId: string;
+  type?: string;
+  placeholder?: string;
 }) {
   const Tag = textarea ? 'textarea' : 'input';
   return (
@@ -1411,12 +1484,14 @@ function Field({
         {required && <span className="ml-1 text-primary">*</span>}
       </span>
       <Tag
+        type={textarea ? undefined : type}
+        placeholder={placeholder}
         required={required}
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className={`focus-ring min-h-12 w-full resize-y border bg-[#0d1011] px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 ${
+        className={`focus-ring min-h-12 w-full resize-y border bg-card text-card-foreground px-4 py-3 text-sm placeholder:text-muted-foreground/60 ${
           textarea ? 'min-h-32' : ''
-        } ${error ? 'border-primary' : 'border-white/15'}`}
+        } ${error ? 'border-primary' : 'border-border'}`}
         aria-invalid={Boolean(error)}
         data-testid={testId}
       />
@@ -1500,16 +1575,16 @@ function ContactPage() {
                 </div>
               </div>
 
-              <div className="mt-8 pt-6 border-t border-white/15">
+              <div className="mt-8 pt-6 border-t border-border">
                 <p className="eyebrow mb-3 text-accent">Customer Amenities</p>
                 <div className="flex flex-wrap gap-2 text-xs">
-                  <span className="inline-flex items-center gap-1.5 rounded border border-white/10 bg-white/5 px-3 py-1.5 text-muted-foreground">
+                  <span className="inline-flex items-center gap-1.5 rounded border border-border bg-muted/30 px-3 py-1.5 text-muted-foreground">
                     <Check size={13} className="text-accent" /> Restroom
                   </span>
-                  <span className="inline-flex items-center gap-1.5 rounded border border-white/10 bg-white/5 px-3 py-1.5 text-muted-foreground">
+                  <span className="inline-flex items-center gap-1.5 rounded border border-border bg-muted/30 px-3 py-1.5 text-muted-foreground">
                     <Check size={13} className="text-accent" /> Gender-neutral restroom
                   </span>
-                  <span className="inline-flex items-center gap-1.5 rounded border border-white/10 bg-white/5 px-3 py-1.5 text-muted-foreground">
+                  <span className="inline-flex items-center gap-1.5 rounded border border-border bg-muted/30 px-3 py-1.5 text-muted-foreground">
                     <Wifi size={13} className="text-accent" /> Free WiFi
                   </span>
                 </div>
@@ -1517,7 +1592,7 @@ function ContactPage() {
             </div>
           </div>
 
-          <div className="border-t border-white/15 pt-7">
+          <div className="border-t border-border pt-7">
             <p className="eyebrow mb-3 text-accent">Quick Actions</p>
             <div className="flex flex-wrap gap-3">
               <a
@@ -1529,7 +1604,7 @@ function ContactPage() {
               </a>
               <a
                 href="mailto:customers@pittsstopauto.com"
-                className="focus-ring inline-flex items-center gap-2 border border-white/20 px-4 py-3 text-xs font-bold uppercase tracking-[.12em] text-foreground hover:border-primary hover:bg-primary/10 transition-colors"
+                className="focus-ring inline-flex items-center gap-2 border border-border px-4 py-3 text-xs font-bold uppercase tracking-[.12em] text-foreground hover:border-primary hover:bg-primary/10 transition-colors"
                 data-testid="link-action-email"
               >
                 <Mail size={14} /> Email Us
@@ -1538,7 +1613,7 @@ function ContactPage() {
                 href="https://www.google.com/maps/dir/?api=1&destination=4734+Baum+Blvd,+Pittsburgh+PA+15213"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="focus-ring inline-flex items-center gap-2 border border-white/20 px-4 py-3 text-xs font-bold uppercase tracking-[.12em] text-foreground hover:border-primary hover:bg-primary/10 transition-colors"
+                className="focus-ring inline-flex items-center gap-2 border border-border px-4 py-3 text-xs font-bold uppercase tracking-[.12em] text-foreground hover:border-primary hover:bg-primary/10 transition-colors"
                 data-testid="link-action-directions"
               >
                 <Navigation size={14} /> Directions
@@ -1547,7 +1622,7 @@ function ContactPage() {
           </div>
         </div>
 
-        <div className="border border-white/15 bg-[#111416] p-6 sm:p-10">
+        <div className="border border-border bg-card p-6 sm:p-10 shadow-sm">
           <SectionLabel index="03">Send a Message</SectionLabel>
           <h2 className="mb-8 font-display text-4xl uppercase leading-[.9] sm:text-5xl">
             Request an Estimate<br /><span className="text-accent">or Service Inquiry</span>
