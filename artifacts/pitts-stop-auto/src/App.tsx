@@ -44,6 +44,13 @@ import heroGarage from './assets/garage-hero.jpg';
 import detailGarage from './assets/garage-detail.jpg';
 import logoImg from './assets/logo.png';
 import whatsappImg from './assets/whatsapp.png';
+import {
+  ScrollProgressBar,
+  ScrollReveal,
+  StaggerContainer,
+  StaggerItem,
+  ScrollToTop,
+} from './components/motion';
 
 const queryClient = new QueryClient();
 type Theme = 'dark' | 'light';
@@ -75,12 +82,26 @@ function useMeta(title: string, description: string) {
 function Header() {
   const [location] = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { theme, toggle } = useContext(ThemeContext);
   const active = (href: string) => href === '/' ? location === '/' : location.startsWith(href);
 
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <>
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-[hsl(220_14%_8%/.92)] backdrop-blur-md">
+      <header
+        className={`sticky top-0 z-30 transition-all duration-300 border-b ${
+          scrolled
+            ? 'border-border bg-background/95 shadow-md backdrop-blur-md'
+            : 'border-border/50 bg-background/80 backdrop-blur-sm'
+        }`}
+      >
         <div className="mx-auto flex h-[76px] max-w-[1320px] items-center justify-between px-5 lg:px-10">
           <Link href="/" onClick={() => setMenuOpen(false)} className="focus-ring group flex items-center gap-3" data-testid="link-brand">
             <img
@@ -302,7 +323,9 @@ function FloatingWhatsApp() {
 function Shell({ children }: { children: ReactNode }) {
   return (
     <div className="noise min-h-[100dvh] overflow-x-hidden">
+      <ScrollProgressBar />
       {children}
+      <ScrollToTop />
       <FloatingWhatsApp />
     </div>
   );
@@ -581,9 +604,9 @@ function HomePage() {
       description="Pitts Stop Auto Car Care Center is a small, family-owned business in Pittsburgh, PA offering diagnostics, major repairs, minor repairs, and service for most car makes."
     >
       {/* HERO SECTION */}
-      <section className="relative isolate overflow-hidden border-b border-white/10">
+      <section className="relative isolate overflow-hidden border-b border-border">
         <div className="mx-auto grid max-w-[1320px] items-end gap-10 px-5 pb-16 pt-16 lg:grid-cols-[.9fr_1.1fr] lg:px-10 lg:pb-24 lg:pt-24">
-          <div className="relative z-10 animate-rise">
+          <ScrollReveal direction="up" className="relative z-10">
             <p className="eyebrow mb-5 text-primary">Small, family-owned business / Pittsburgh, PA</p>
             <h1 className="max-w-xl font-display text-[clamp(3.8rem,8.5vw,8rem)] font-semibold uppercase leading-[.85] tracking-[-.035em]">
               PITTS STOP AUTO<br />
@@ -603,22 +626,22 @@ function HomePage() {
                 <span className="text-foreground">4734 Baum Blvd, Pittsburgh PA 15213 · (412) 682-5255</span>
               </p>
             </div>
-          </div>
-          <div className="relative animate-rise delay-2">
+          </ScrollReveal>
+          <ScrollReveal direction="left" delay={0.15} className="relative">
             <HotspotBay />
             <p className="absolute -bottom-9 right-0 hidden font-mono-ui text-[10px] uppercase tracking-[.14em] text-muted-foreground sm:block">
               Tap a point to inspect capabilities
             </p>
-          </div>
+          </ScrollReveal>
         </div>
-        <div className="pointer-events-none absolute -right-24 top-20 -z-10 font-display text-[18rem] font-bold leading-none text-white/[.025]">
+        <div className="pointer-events-none absolute -right-24 top-20 -z-10 font-display text-[18rem] font-bold leading-none text-foreground/[.025]">
           PSA
         </div>
       </section>
 
       {/* SPECIALS SECTION */}
-      <section className="border-b border-white/10 bg-[#111416]" aria-label="Specials">
-        <div className="mx-auto max-w-[1320px] px-5 py-12 lg:px-10 lg:py-16">
+      <section className="border-b border-border bg-card/50" aria-label="Specials">
+        <ScrollReveal className="mx-auto max-w-[1320px] px-5 py-12 lg:px-10 lg:py-16">
           <div className="flex flex-col items-center justify-between gap-6 border border-accent/30 bg-accent/5 p-8 text-center sm:flex-row sm:text-left">
             <div>
               <div className="mb-2 flex items-center justify-center gap-2 sm:justify-start">
@@ -641,13 +664,13 @@ function HomePage() {
               SPECIALS <ArrowRight size={15} />
             </button>
           </div>
-        </div>
+        </ScrollReveal>
         <SpecialsModal open={specialsModalOpen} onOpenChange={setSpecialsModalOpen} />
       </section>
 
       {/* OUR SERVICES PREVIEW */}
       <section className="mx-auto max-w-[1320px] px-5 py-20 lg:px-10 lg:py-28" aria-label="Our Services">
-        <div className="mb-12 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+        <ScrollReveal className="mb-12 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
             <SectionLabel index="01">Capabilities</SectionLabel>
             <h2 className="font-display text-5xl uppercase leading-none sm:text-6xl">OUR SERVICES</h2>
@@ -659,10 +682,10 @@ function HomePage() {
           >
             Full List <ArrowRight size={15} />
           </Link>
-        </div>
+        </ScrollReveal>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="border border-white/15 bg-[#111416] p-6">
+        <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <StaggerItem className="border border-border bg-card p-6 shadow-sm hover:-translate-y-1 transition-all duration-300">
             <span className="font-mono-ui text-xs text-primary">01</span>
             <div className="my-5 grid h-10 w-10 place-items-center border border-primary/60 text-primary">
               <Sparkles size={20} />
@@ -671,9 +694,9 @@ function HomePage() {
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
               Oil change with 20-point checks, official PA state inspections (safety & emissions), brake service, exhaust & muffler repairs, and A/C service.
             </p>
-          </div>
+          </StaggerItem>
 
-          <div className="border border-white/15 bg-[#111416] p-6">
+          <StaggerItem className="border border-border bg-card p-6 shadow-sm hover:-translate-y-1 transition-all duration-300">
             <span className="font-mono-ui text-xs text-primary">02</span>
             <div className="my-5 grid h-10 w-10 place-items-center border border-primary/60 text-primary">
               <Gauge size={20} />
@@ -682,9 +705,9 @@ function HomePage() {
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
               Check engine light diagnosis, electrical & battery repair, steering & suspension, timing belts, tire service, and used-car inspections.
             </p>
-          </div>
+          </StaggerItem>
 
-          <div className="border border-white/15 bg-[#111416] p-6">
+          <StaggerItem className="border border-border bg-card p-6 shadow-sm hover:-translate-y-1 transition-all duration-300">
             <span className="font-mono-ui text-xs text-primary">03</span>
             <div className="my-5 grid h-10 w-10 place-items-center border border-primary/60 text-primary">
               <Wrench size={20} />
@@ -693,9 +716,9 @@ function HomePage() {
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
               Domestic & foreign cars, small trucks, classic cars, and hybrid vehicles. European specialties (Volvo, SAAB, Audi, VW) & Asian makes (Honda, Toyota, Nissan).
             </p>
-          </div>
+          </StaggerItem>
 
-          <div className="border border-white/15 bg-[#111416] p-6">
+          <StaggerItem className="border border-border bg-card p-6 shadow-sm hover:-translate-y-1 transition-all duration-300">
             <span className="font-mono-ui text-xs text-primary">04</span>
             <div className="my-5 grid h-10 w-10 place-items-center border border-primary/60 text-primary">
               <Hammer size={20} />
@@ -704,21 +727,21 @@ function HomePage() {
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
               Engine service & replacement (used or rebuilt), transmission service & replacement, head gasket & valve jobs, and clutch replacement.
             </p>
-          </div>
-        </div>
+          </StaggerItem>
+        </StaggerContainer>
       </section>
 
       {/* ABOUT US PREVIEW */}
-      <section className="border-y border-white/10 bg-[#111416]" aria-label="About Us Preview">
+      <section className="border-y border-border bg-card/40" aria-label="About Us Preview">
         <div className="mx-auto grid max-w-[1320px] items-center gap-10 px-5 py-16 lg:grid-cols-[1fr_.85fr] lg:px-10 lg:py-24">
-          <div className="overflow-hidden border border-white/10">
+          <ScrollReveal direction="right" className="overflow-hidden border border-border shadow-sm">
             <img
               src={detailGarage}
               alt="Technician conducting vehicle diagnostics at Pitts Stop Auto"
               className="h-[360px] w-full object-cover sm:h-[480px]"
             />
-          </div>
-          <div>
+          </ScrollReveal>
+          <ScrollReveal direction="left">
             <SectionLabel index="02">About Us</SectionLabel>
             <h2 className="font-display text-4xl uppercase leading-[.9] sm:text-6xl">
               Family-Owned.<br />
@@ -727,7 +750,7 @@ function HomePage() {
             <p className="mt-6 text-base leading-7 text-muted-foreground">
               Pitts Stop Auto is a small, family-owned business with a simple mission: to provide great, professional, and friendly service to our customers.
             </p>
-            <div className="mt-6 space-y-3 border-t border-white/15 pt-5 text-sm text-muted-foreground">
+            <div className="mt-6 space-y-3 border-t border-border pt-5 text-sm text-muted-foreground">
               <p className="font-semibold text-foreground">
                 <span className="text-primary font-mono-ui text-xs mr-2">OWNER</span>
                 Noor Khan — Owner
@@ -743,110 +766,114 @@ function HomePage() {
               <ButtonLink href="/about" testId="link-home-about-more">Read Our Story</ButtonLink>
               <ButtonLink href="/contact" variant="outline" testId="link-home-contact-direct">Contact The Shop</ButtonLink>
             </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
       {/* VISIT US SECTION */}
       <section className="mx-auto max-w-[1320px] px-5 py-20 lg:px-10 lg:py-28" aria-label="Visit Us">
-        <div className="mb-10">
+        <ScrollReveal className="mb-10">
           <SectionLabel index="03">Location</SectionLabel>
           <h2 className="font-display text-5xl uppercase leading-none sm:text-6xl">VISIT US!</h2>
           <p className="mt-3 text-base text-muted-foreground">
             Conveniently located in Pittsburgh, PA on Baum Boulevard.
           </p>
-        </div>
+        </ScrollReveal>
 
         <div className="grid gap-10 lg:grid-cols-[1.1fr_.9fr]">
-          <MapEmbed />
+          <ScrollReveal direction="right">
+            <MapEmbed />
+          </ScrollReveal>
 
-          <div className="flex flex-col justify-between border border-white/15 bg-[#111416] p-6 sm:p-8">
-            <div>
-              <div className="mb-5 flex items-center gap-3 border-b border-white/10 pb-4">
-                <img src={logoImg} alt="Pitts Stop Auto Logo" className="h-12 w-auto object-contain" />
-                <div>
-                  <p className="eyebrow text-accent">Pittsburgh Car Care Center</p>
-                  <h3 className="font-display text-2xl uppercase">Pitts Stop Auto</h3>
+          <ScrollReveal direction="left">
+            <div className="flex flex-col justify-between border border-border bg-card p-6 sm:p-8 shadow-sm">
+              <div>
+                <div className="mb-5 flex items-center gap-3 border-b border-border pb-4">
+                  <img src={logoImg} alt="Pitts Stop Auto Logo" className="h-12 w-auto object-contain" />
+                  <div>
+                    <p className="eyebrow text-accent">Pittsburgh Car Care Center</p>
+                    <h3 className="font-display text-2xl uppercase">Pitts Stop Auto</h3>
+                  </div>
+                </div>
+                <div className="mt-6 space-y-4 text-sm text-muted-foreground">
+                  <div className="flex items-start gap-3">
+                    <MapPin className="mt-0.5 shrink-0 text-primary" size={18} />
+                    <div>
+                      <span className="font-semibold text-foreground block">Address</span>
+                      <span>4734 Baum Blvd, Pittsburgh PA 15213</span>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Clock3 className="mt-0.5 shrink-0 text-primary" size={18} />
+                    <div>
+                      <span className="font-semibold text-foreground block">Shop Hours</span>
+                      <p>Mon – Fri: <span className="text-foreground font-medium">8:00 AM – 6:00 PM</span></p>
+                      <p>Sat & Sun: <span className="text-foreground font-medium">Closed</span></p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Phone className="mt-0.5 shrink-0 text-primary" size={18} />
+                    <div>
+                      <span className="font-semibold text-foreground block">Telephone</span>
+                      <a href="tel:+14126825255" className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline">
+                        (412) 682-5255
+                      </a>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <PhoneCall className="mt-0.5 shrink-0 text-primary" size={18} />
+                    <div>
+                      <span className="font-semibold text-foreground block">Fax</span>
+                      <span>(412) 682-5252</span>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Mail className="mt-0.5 shrink-0 text-primary" size={18} />
+                    <div>
+                      <span className="font-semibold text-foreground block">Email</span>
+                      <a href="mailto:customers@pittsstopauto.com" className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline">
+                        customers@pittsstopauto.com
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-6 pt-5 border-t border-border">
+                  <span className="eyebrow text-accent block mb-2.5">Shop Amenities</span>
+                  <div className="flex flex-wrap gap-2 text-xs">
+                    <span className="inline-flex items-center gap-1.5 rounded border border-border bg-muted/30 px-2.5 py-1 text-muted-foreground">
+                      <Check size={12} className="text-accent" /> Restroom
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 rounded border border-border bg-muted/30 px-2.5 py-1 text-muted-foreground">
+                      <Check size={12} className="text-accent" /> Gender-neutral restroom
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 rounded border border-border bg-muted/30 px-2.5 py-1 text-muted-foreground">
+                      <Wifi size={12} className="text-accent" /> Free WiFi
+                    </span>
+                  </div>
                 </div>
               </div>
-              <div className="mt-6 space-y-4 text-sm text-muted-foreground">
-                <div className="flex items-start gap-3">
-                  <MapPin className="mt-0.5 shrink-0 text-primary" size={18} />
-                  <div>
-                    <span className="font-semibold text-foreground block">Address</span>
-                    <span>4734 Baum Blvd, Pittsburgh PA 15213</span>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Clock3 className="mt-0.5 shrink-0 text-primary" size={18} />
-                  <div>
-                    <span className="font-semibold text-foreground block">Shop Hours</span>
-                    <p>Mon – Fri: <span className="text-foreground font-medium">8:00 AM – 6:00 PM</span></p>
-                    <p>Sat & Sun: <span className="text-foreground font-medium">Closed</span></p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Phone className="mt-0.5 shrink-0 text-primary" size={18} />
-                  <div>
-                    <span className="font-semibold text-foreground block">Telephone</span>
-                    <a href="tel:+14126825255" className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline">
-                      (412) 682-5255
-                    </a>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <PhoneCall className="mt-0.5 shrink-0 text-primary" size={18} />
-                  <div>
-                    <span className="font-semibold text-foreground block">Fax</span>
-                    <span>(412) 682-5252</span>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Mail className="mt-0.5 shrink-0 text-primary" size={18} />
-                  <div>
-                    <span className="font-semibold text-foreground block">Email</span>
-                    <a href="mailto:customers@pittsstopauto.com" className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline">
-                      customers@pittsstopauto.com
-                    </a>
-                  </div>
-                </div>
-              </div>
 
-              <div className="mt-6 pt-5 border-t border-white/10">
-                <span className="eyebrow text-accent block mb-2.5">Shop Amenities</span>
-                <div className="flex flex-wrap gap-2 text-xs">
-                  <span className="inline-flex items-center gap-1.5 rounded border border-white/10 bg-white/5 px-2.5 py-1 text-muted-foreground">
-                    <Check size={12} className="text-accent" /> Restroom
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 rounded border border-white/10 bg-white/5 px-2.5 py-1 text-muted-foreground">
-                    <Check size={12} className="text-accent" /> Gender-neutral restroom
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 rounded border border-white/10 bg-white/5 px-2.5 py-1 text-muted-foreground">
-                    <Wifi size={12} className="text-accent" /> Free WiFi
-                  </span>
-                </div>
+              <div className="mt-8 pt-6 border-t border-border flex flex-col sm:flex-row gap-3">
+                <a
+                  href="tel:+14126825255"
+                  className="focus-ring inline-flex items-center justify-center gap-2 bg-primary px-5 py-3 text-xs font-bold uppercase tracking-[.12em] text-primary-foreground hover:bg-[#d7352d] transition-colors"
+                  data-testid="link-visit-call"
+                >
+                  <Phone size={14} /> Call (412) 682-5255
+                </a>
+                <a
+                  href="https://www.google.com/maps/dir/?api=1&destination=4734+Baum+Blvd,+Pittsburgh+PA+15213"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="focus-ring inline-flex items-center justify-center gap-2 border border-border px-5 py-3 text-xs font-bold uppercase tracking-[.12em] text-foreground hover:border-primary hover:bg-primary/10 transition-colors"
+                  data-testid="link-visit-directions"
+                >
+                  <Navigation size={14} /> Get Directions
+                </a>
               </div>
             </div>
-
-            <div className="mt-8 pt-6 border-t border-white/15 flex flex-col sm:flex-row gap-3">
-              <a
-                href="tel:+14126825255"
-                className="focus-ring inline-flex items-center justify-center gap-2 bg-primary px-5 py-3 text-xs font-bold uppercase tracking-[.12em] text-primary-foreground hover:bg-[#d7352d] transition-colors"
-                data-testid="link-visit-call"
-              >
-                <Phone size={14} /> Call (412) 682-5255
-              </a>
-              <a
-                href="https://www.google.com/maps/dir/?api=1&destination=4734+Baum+Blvd,+Pittsburgh+PA+15213"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="focus-ring inline-flex items-center justify-center gap-2 border border-white/20 px-5 py-3 text-xs font-bold uppercase tracking-[.12em] text-foreground hover:border-primary hover:bg-primary/10 transition-colors"
-                data-testid="link-visit-directions"
-              >
-                <Navigation size={14} /> Get Directions
-              </a>
-            </div>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
@@ -857,8 +884,8 @@ function HomePage() {
 
 function CtaBand() {
   return (
-    <section className="border-t border-primary/30 bg-primary px-5 py-12 text-white lg:px-10 lg:py-16">
-      <div className="mx-auto flex max-w-[1320px] flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+    <section className="border-t border-primary/30 bg-primary px-5 py-12 text-white lg:px-10 lg:py-16 overflow-hidden">
+      <ScrollReveal className="mx-auto flex max-w-[1320px] flex-col items-start justify-between gap-8 md:flex-row md:items-center">
         <div>
           <p className="eyebrow mb-3 !text-white/85">Pitts Stop Auto · Car Care Center</p>
           <h2 className="font-display text-5xl uppercase leading-[.88] sm:text-6xl text-white">
@@ -881,22 +908,22 @@ function CtaBand() {
             Request an estimate <ArrowRight size={15} />
           </Link>
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }
 
 function PageIntro({ eyebrow, title, copy }: { eyebrow: string; title: ReactNode; copy: string }) {
   return (
-    <section className="relative overflow-hidden border-b border-white/10">
-      <div className="mx-auto max-w-[1320px] px-5 pb-20 pt-16 lg:px-10 lg:pb-28 lg:pt-24">
+    <section className="relative overflow-hidden border-b border-border">
+      <ScrollReveal className="mx-auto max-w-[1320px] px-5 pb-20 pt-16 lg:px-10 lg:pb-28 lg:pt-24">
         <p className="eyebrow mb-8 text-primary">{eyebrow}</p>
         <h1 className="max-w-4xl font-display text-[clamp(4rem,9vw,8rem)] uppercase leading-[.82] tracking-[-.03em]">
           {title}
         </h1>
         <p className="mt-8 max-w-2xl text-base leading-7 text-muted-foreground">{copy}</p>
-      </div>
-      <div className="pointer-events-none absolute -right-10 bottom-[-3rem] font-display text-[15rem] leading-none text-white/[.025]">
+      </ScrollReveal>
+      <div className="pointer-events-none absolute -right-10 bottom-[-3rem] font-display text-[15rem] leading-none text-foreground/[.02]">
         PSA
       </div>
     </section>
@@ -916,13 +943,13 @@ function AboutPage() {
       />
 
       <section className="mx-auto grid max-w-[1320px] gap-12 px-5 py-20 lg:grid-cols-[.8fr_1.2fr] lg:px-10 lg:py-28">
-        <div>
+        <ScrollReveal direction="right">
           <SectionLabel index="02">Our Mission</SectionLabel>
           <h2 className="font-display text-5xl uppercase leading-[.9] sm:text-7xl">
             Ethics &<br /><span className="text-accent">Customer Care.</span>
           </h2>
-        </div>
-        <div className="space-y-6 text-base leading-7 text-muted-foreground">
+        </ScrollReveal>
+        <ScrollReveal direction="left" className="space-y-6 text-base leading-7 text-muted-foreground">
           <p>
             Pitts Stop Auto is a small, family-owned business with a simple mission: to provide great, professional, and friendly service to our customers.
           </p>
@@ -932,15 +959,17 @@ function AboutPage() {
           <p className="border-l-2 border-primary pl-4 text-foreground font-semibold">
             "Our priorities are professional ethics, quality service, and customer care."
           </p>
-        </div>
+        </ScrollReveal>
       </section>
 
       {/* TEAM OVERVIEW - NOOR KHAN */}
-      <section className="border-y border-white/10 bg-[#111416]">
+      <section className="border-y border-border bg-card/40">
         <div className="mx-auto max-w-[1320px] px-5 py-20 lg:px-10 lg:py-28">
-          <SectionLabel index="03">Leadership & Team</SectionLabel>
-          <div className="mt-8 grid gap-8 md:grid-cols-2">
-            <div className="border border-white/15 bg-[#15191b] p-8">
+          <ScrollReveal>
+            <SectionLabel index="03">Leadership & Team</SectionLabel>
+          </ScrollReveal>
+          <StaggerContainer className="mt-8 grid gap-8 md:grid-cols-2">
+            <StaggerItem className="border border-border bg-card p-8 shadow-sm hover:-translate-y-1 transition-all duration-300">
               <div className="mb-4 inline-flex h-12 w-12 items-center justify-center bg-primary text-primary-foreground font-display text-xl font-bold">
                 NK
               </div>
@@ -950,10 +979,10 @@ function AboutPage() {
               <p className="mt-4 text-sm leading-6 text-muted-foreground">
                 Owner Noor Khan leads Pitts Stop Auto with a commitment to straightforward service, careful vehicle diagnostics, and attentive customer care for every driver who walks through our doors.
               </p>
-            </div>
+            </StaggerItem>
 
-            <div className="border border-white/15 bg-[#15191b] p-8">
-              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center border border-white/30 text-foreground font-display text-xl font-bold">
+            <StaggerItem className="border border-border bg-card p-8 shadow-sm hover:-translate-y-1 transition-all duration-300">
+              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center border border-border text-foreground font-display text-xl font-bold bg-muted/20">
                 <UserCheck size={24} className="text-accent" />
               </div>
               <p className="eyebrow text-accent">Technical Team</p>
@@ -962,35 +991,37 @@ function AboutPage() {
               <p className="mt-4 text-sm leading-6 text-muted-foreground">
                 Our professional team brings extensive hands-on experience in vehicle diagnostics, mechanical overhauls, routine service, and quality assurance across all automotive makes and models.
               </p>
-            </div>
-          </div>
+            </StaggerItem>
+          </StaggerContainer>
         </div>
       </section>
 
       <section className="mx-auto grid max-w-[1320px] gap-12 px-5 py-20 lg:grid-cols-[1fr_.8fr] lg:px-10 lg:py-28">
-        <img
-          src={detailGarage}
-          alt="Hands-on diagnostic inspection inside Pitts Stop Auto workshop"
-          className="h-[420px] w-full object-cover sm:h-[520px]"
-        />
-        <div>
+        <ScrollReveal direction="right" className="overflow-hidden border border-border shadow-sm">
+          <img
+            src={detailGarage}
+            alt="Hands-on diagnostic inspection inside Pitts Stop Auto workshop"
+            className="h-[420px] w-full object-cover sm:h-[520px]"
+          />
+        </ScrollReveal>
+        <ScrollReveal direction="left">
           <SectionLabel index="04">Core Priorities</SectionLabel>
-          <div className="space-y-8">
+          <StaggerContainer className="space-y-8">
             {[
               { num: '01', title: 'Professional Ethics', desc: 'Honest assessments and straightforward advice on your vehicle before any wrench turns.' },
               { num: '02', title: 'Quality Service', desc: 'Thorough diagnostics, dependable repairs, and dedicated quality assurance for all makes.' },
               { num: '03', title: 'Customer Care', desc: 'Friendly, personalized attention from a dedicated family-owned neighborhood shop.' },
             ].map((pillar) => (
-              <div key={pillar.num} className="flex gap-5 border-b border-white/10 pb-7">
+              <StaggerItem key={pillar.num} className="flex gap-5 border-b border-border pb-7">
                 <span className="font-mono-ui text-xs text-primary">{pillar.num}</span>
                 <div>
                   <h3 className="font-display text-2xl uppercase leading-none">{pillar.title}</h3>
                   <p className="mt-2 text-sm leading-6 text-muted-foreground">{pillar.desc}</p>
                 </div>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
-        </div>
+          </StaggerContainer>
+        </ScrollReveal>
       </section>
 
       <CtaBand />
@@ -1075,7 +1106,7 @@ function ServicesPage() {
       />
 
       <section className="mx-auto max-w-[1320px] px-5 py-20 lg:px-10 lg:py-28" aria-label="Services List">
-        <div className="mb-12 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+        <ScrollReveal className="mb-12 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div>
             <SectionLabel index="02">Service Categories</SectionLabel>
             <h2 className="font-display text-5xl uppercase leading-none sm:text-6xl">Full Service Menu</h2>
@@ -1087,68 +1118,72 @@ function ServicesPage() {
           >
             <Phone size={14} /> Call (412) 682-5255 for service
           </a>
-        </div>
+        </ScrollReveal>
 
         <div className="space-y-12">
           {servicesData.map((category, index) => (
-            <div
+            <ScrollReveal
               key={category.id}
-              id={category.id}
-              className="border border-white/15 bg-[#111416] p-6 sm:p-10 transition-colors hover:border-white/30"
-              data-testid={`card-service-${category.id}`}
+              direction="up"
+              className="border border-border bg-card p-6 sm:p-10 shadow-sm hover:border-primary/40 transition-all duration-300"
             >
-              <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
-                <div className="flex items-start gap-4">
-                  <div className="mt-1 grid h-12 w-12 shrink-0 place-items-center border border-primary/60 bg-primary/10 text-primary">
-                    {category.icon}
-                  </div>
-                  <div>
-                    <span className="font-mono-ui text-xs text-primary">Category 0{index + 1}</span>
-                    <h3 className="mt-1 font-display text-4xl uppercase tracking-tight text-foreground">
-                      {category.title}
-                    </h3>
-                    <p className="mt-1 text-sm text-accent eyebrow">{category.subtitle}</p>
-                    <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
-                      {category.description}
-                    </p>
-                    {category.specialty && (
-                      <p className="mt-2 max-w-2xl text-sm font-semibold text-foreground">
-                        {category.specialty}
+              <div
+                id={category.id}
+                data-testid={`card-service-${category.id}`}
+              >
+                <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+                  <div className="flex items-start gap-4">
+                    <div className="mt-1 grid h-12 w-12 shrink-0 place-items-center border border-primary/60 bg-primary/10 text-primary">
+                      {category.icon}
+                    </div>
+                    <div>
+                      <span className="font-mono-ui text-xs text-primary">Category 0{index + 1}</span>
+                      <h3 className="mt-1 font-display text-4xl uppercase tracking-tight text-foreground">
+                        {category.title}
+                      </h3>
+                      <p className="mt-1 text-sm text-accent eyebrow">{category.subtitle}</p>
+                      <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
+                        {category.description}
                       </p>
-                    )}
+                      {category.specialty && (
+                        <p className="mt-2 max-w-2xl text-sm font-semibold text-foreground">
+                          {category.specialty}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="shrink-0">
+                    <a
+                      href="tel:+14126825255"
+                      className="focus-ring inline-flex items-center gap-2 border border-primary/60 bg-primary/10 px-4 py-3 text-[11px] font-bold uppercase tracking-[.12em] text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
+                      data-testid={`button-call-service-${category.id}`}
+                    >
+                      <Phone size={14} /> Ask About This
+                    </a>
                   </div>
                 </div>
 
-                <div className="shrink-0">
-                  <a
-                    href="tel:+14126825255"
-                    className="focus-ring inline-flex items-center gap-2 border border-primary/60 bg-primary/10 px-4 py-3 text-[11px] font-bold uppercase tracking-[.12em] text-primary hover:bg-primary hover:text-primary-foreground transition-colors"
-                    data-testid={`button-call-service-${category.id}`}
-                  >
-                    <Phone size={14} /> Ask About This
-                  </a>
+                <div className="mt-8 border-t border-border pt-6">
+                  <h4 className="eyebrow mb-4 text-foreground">Services & Capabilities:</h4>
+                  <StaggerContainer className="grid gap-3 sm:grid-cols-2 text-sm leading-6 text-muted-foreground">
+                    {category.items.map((item, i) => (
+                      <StaggerItem key={i} className="flex items-start gap-3">
+                        <Check size={16} className="mt-1 shrink-0 text-primary" />
+                        <span>{item}</span>
+                      </StaggerItem>
+                    ))}
+                  </StaggerContainer>
                 </div>
               </div>
-
-              <div className="mt-8 border-t border-white/10 pt-6">
-                <h4 className="eyebrow mb-4 text-foreground">Services & Capabilities:</h4>
-                <ul className="grid gap-3 sm:grid-cols-2 text-sm leading-6 text-muted-foreground">
-                  {category.items.map((item, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <Check size={16} className="mt-1 shrink-0 text-primary" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
       </section>
 
       {/* SERVICES PAGE CTA: CALL US! */}
-      <section className="border-t border-accent/40 bg-[#15191b] px-5 py-16 lg:px-10 lg:py-20 text-center" aria-label="Call Us CTA">
-        <div className="mx-auto max-w-2xl">
+      <section className="border-t border-accent/40 bg-card/60 px-5 py-16 lg:px-10 lg:py-20 text-center" aria-label="Call Us CTA">
+        <ScrollReveal className="mx-auto max-w-2xl">
           <div className="mx-auto mb-5 grid h-14 w-14 place-items-center rounded-full bg-accent text-accent-foreground">
             <Phone size={24} />
           </div>
@@ -1170,7 +1205,7 @@ function ServicesPage() {
           <p className="mt-4 text-xs uppercase tracking-wider text-muted-foreground">
             4734 Baum Blvd, Pittsburgh PA 15213 · customers@pittsstopauto.com
           </p>
-        </div>
+        </ScrollReveal>
       </section>
     </PageFrame>
   );
@@ -1233,7 +1268,7 @@ function WhyUsPage() {
       />
 
       <section className="mx-auto grid max-w-[1320px] gap-12 px-5 py-20 lg:grid-cols-[.9fr_1.1fr] lg:px-10 lg:py-28">
-        <div>
+        <ScrollReveal direction="right">
           <SectionLabel index="02">Our Standard</SectionLabel>
           <h2 className="max-w-md font-display text-5xl uppercase leading-[.9] sm:text-7xl">
             Straightforward<br /><span className="text-primary">Service.</span>
@@ -1244,15 +1279,15 @@ function WhyUsPage() {
           <div className="mt-8">
             <a
               href="tel:+14126825255"
-              className="focus-ring inline-flex items-center gap-2 border border-white/20 px-5 py-4 text-xs font-bold uppercase tracking-[.12em] text-foreground hover:border-primary hover:bg-primary/10 transition-colors"
+              className="focus-ring inline-flex items-center gap-2 border border-border px-5 py-4 text-xs font-bold uppercase tracking-[.12em] text-foreground hover:border-primary hover:bg-primary/10 transition-colors"
               data-testid="link-why-phone-cta"
             >
               <Phone size={15} /> Call (412) 682-5255
             </a>
           </div>
-        </div>
+        </ScrollReveal>
 
-        <div className="space-y-4">
+        <StaggerContainer className="space-y-4">
           {[
             {
               num: '01',
@@ -1275,42 +1310,46 @@ function WhyUsPage() {
               desc: 'From minor 20-point oil changes and state inspections to major engine and transmission replacements (used or rebuilt).',
             },
           ].map((item) => (
-            <div key={item.num} className="grid grid-cols-[42px_1fr] gap-4 border-t border-white/15 py-5">
+            <StaggerItem key={item.num} className="grid grid-cols-[42px_1fr] gap-4 border-t border-border py-5">
               <span className="font-mono-ui text-xs text-primary">{item.num}</span>
               <div>
                 <h3 className="font-display text-2xl uppercase">{item.title}</h3>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.desc}</p>
               </div>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </section>
 
-      <section className="border-y border-white/10 bg-[#111416]">
+      <section className="border-y border-border bg-card/40">
         <div className="mx-auto max-w-[1000px] px-5 py-20 lg:px-10 lg:py-28">
-          <SectionLabel index="03">Common Questions</SectionLabel>
-          <h2 className="mb-10 font-display text-5xl uppercase leading-none sm:text-6xl">
-            Frequently Asked Questions
-          </h2>
-          {faqs.map(([question, answer], i) => (
-            <div key={question} className="border-t border-white/15">
-              <button
-                type="button"
-                className="focus-ring flex w-full items-center justify-between gap-5 py-6 text-left"
-                onClick={() => setOpen(open === i ? null : i)}
-                aria-expanded={open === i}
-                data-testid={`button-faq-${i}`}
-              >
-                <span className="font-display text-2xl uppercase">{question}</span>
-                <ChevronDown size={18} className={`shrink-0 text-primary transition-transform ${open === i ? 'rotate-180' : ''}`} />
-              </button>
-              {open === i && (
-                <p className="max-w-2xl pb-7 pr-10 text-sm leading-7 text-muted-foreground">
-                  {answer}
-                </p>
-              )}
-            </div>
-          ))}
+          <ScrollReveal>
+            <SectionLabel index="03">Common Questions</SectionLabel>
+            <h2 className="mb-10 font-display text-5xl uppercase leading-none sm:text-6xl">
+              Frequently Asked Questions
+            </h2>
+          </ScrollReveal>
+          <StaggerContainer>
+            {faqs.map(([question, answer], i) => (
+              <StaggerItem key={question} className="border-t border-border">
+                <button
+                  type="button"
+                  className="focus-ring flex w-full items-center justify-between gap-5 py-6 text-left"
+                  onClick={() => setOpen(open === i ? null : i)}
+                  aria-expanded={open === i}
+                  data-testid={`button-faq-${i}`}
+                >
+                  <span className="font-display text-2xl uppercase">{question}</span>
+                  <ChevronDown size={18} className={`shrink-0 text-primary transition-transform ${open === i ? 'rotate-180' : ''}`} />
+                </button>
+                {open === i && (
+                  <p className="max-w-2xl pb-7 pr-10 text-sm leading-7 text-muted-foreground">
+                    {answer}
+                  </p>
+                )}
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
         </div>
       </section>
 
@@ -1514,11 +1553,13 @@ function ContactPage() {
 
       {/* MAP SECTION */}
       <section className="mx-auto max-w-[1320px] px-5 pt-12 lg:px-10" aria-label="Shop Location Map">
-        <MapEmbed />
+        <ScrollReveal direction="up">
+          <MapEmbed />
+        </ScrollReveal>
       </section>
 
       <section className="mx-auto grid max-w-[1320px] gap-10 px-5 py-16 lg:grid-cols-[.8fr_1.2fr] lg:px-10 lg:py-24">
-        <div className="space-y-10">
+        <ScrollReveal direction="right" className="space-y-10">
           <div>
             <SectionLabel index="02">Location & Details</SectionLabel>
             <div className="mb-6 flex items-center gap-3">
@@ -1620,15 +1661,15 @@ function ContactPage() {
               </a>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
 
-        <div className="border border-border bg-card p-6 sm:p-10 shadow-sm">
+        <ScrollReveal direction="left" className="border border-border bg-card p-6 sm:p-10 shadow-sm">
           <SectionLabel index="03">Send a Message</SectionLabel>
           <h2 className="mb-8 font-display text-4xl uppercase leading-[.9] sm:text-5xl">
             Request an Estimate<br /><span className="text-accent">or Service Inquiry</span>
           </h2>
           <EstimateForm />
-        </div>
+        </ScrollReveal>
       </section>
     </PageFrame>
   );
