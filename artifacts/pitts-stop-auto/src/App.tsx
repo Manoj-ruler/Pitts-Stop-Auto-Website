@@ -225,7 +225,7 @@ function Footer() {
         <div>
           <p className="eyebrow mb-5 text-foreground">At the shop</p>
           <div className="text-sm leading-7 text-muted-foreground space-y-1.5">
-            <p>Address: <span className="text-foreground">4740 Baum Blvd, Pittsburgh PA 15213</span></p>
+            <p>Address: <span className="text-foreground">4734 Baum Blvd, Pittsburgh PA 15213</span></p>
             <p>Telephone: <a href="tel:+14126825255" className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline" data-testid="link-footer-phone">(412) 682-5255</a></p>
             <p>Fax: <span className="text-foreground">(412) 682-5252</span></p>
             <p>Email: <a href="mailto:customers@pittsstopauto.com" className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline" data-testid="link-footer-email">customers@pittsstopauto.com</a></p>
@@ -242,7 +242,7 @@ function Footer() {
       <div className="border-t border-white/10 px-5 py-5 lg:px-10">
         <div className="mx-auto flex max-w-[1320px] flex-col justify-between gap-2 text-[10px] uppercase tracking-[.1em] text-muted-foreground sm:flex-row">
           <span>Pitts Stop Auto 2018 ©</span>
-          <span>4740 Baum Blvd, Pittsburgh PA 15213 · (412) 682-5255</span>
+          <span>4734 Baum Blvd, Pittsburgh PA 15213 · (412) 682-5255</span>
         </div>
       </div>
     </footer>
@@ -299,8 +299,8 @@ function MapEmbed() {
   return (
     <div className="relative h-[340px] w-full overflow-hidden border border-white/15 bg-[#15191b] sm:h-[420px]">
       <iframe
-        title="Pitts Stop Auto Location — 4740 Baum Blvd, Pittsburgh PA 15213"
-        src="https://maps.google.com/maps?q=4740+Baum+Blvd,+Pittsburgh+PA+15213&t=&z=15&ie=UTF8&iwloc=&output=embed"
+        title="Pitts Stop Auto Location — 4734 Baum Blvd, Pittsburgh PA 15213"
+        src="https://maps.google.com/maps?q=4734+Baum+Blvd,+Pittsburgh+PA+15213&t=&z=16&ie=UTF8&iwloc=&output=embed"
         className="h-full w-full border-0"
         loading="lazy"
         referrerPolicy="no-referrer-when-downgrade"
@@ -406,7 +406,7 @@ function HomePage() {
               <ShieldCheck size={20} className="shrink-0 text-accent" />
               <p className="text-xs leading-5 text-muted-foreground">
                 Professional ethics · Quality service · Customer care<br />
-                <span className="text-foreground">4740 Baum Blvd, Pittsburgh PA 15213 · (412) 682-5255</span>
+                <span className="text-foreground">4734 Baum Blvd, Pittsburgh PA 15213 · (412) 682-5255</span>
               </p>
             </div>
           </div>
@@ -573,7 +573,7 @@ function HomePage() {
                   <MapPin className="mt-0.5 shrink-0 text-primary" size={18} />
                   <div>
                     <span className="font-semibold text-foreground block">Address</span>
-                    <span>4740 Baum Blvd, Pittsburgh PA 15213</span>
+                    <span>4734 Baum Blvd, Pittsburgh PA 15213</span>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -613,7 +613,7 @@ function HomePage() {
                 <Phone size={14} /> Call (412) 682-5255
               </a>
               <a
-                href="https://www.google.com/maps/dir/?api=1&destination=4740+Baum+Blvd,+Pittsburgh+PA+15213"
+                href="https://www.google.com/maps/dir/?api=1&destination=4734+Baum+Blvd,+Pittsburgh+PA+15213"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="focus-ring inline-flex items-center justify-center gap-2 border border-white/20 px-5 py-3 text-xs font-bold uppercase tracking-[.12em] text-foreground hover:border-primary hover:bg-primary/10 transition-colors"
@@ -940,7 +940,7 @@ function ServicesPage() {
             </a>
           </div>
           <p className="mt-4 text-xs uppercase tracking-wider text-muted-foreground">
-            4740 Baum Blvd, Pittsburgh PA 15213 · customers@pittsstopauto.com
+            4734 Baum Blvd, Pittsburgh PA 15213 · customers@pittsstopauto.com
           </p>
         </div>
       </section>
@@ -1185,7 +1185,7 @@ function ContactPage() {
   return (
     <PageFrame
       title="Contact Us"
-      description="Contact Pitts Stop Auto in Pittsburgh, PA: 4740 Baum Blvd, (412) 682-5255, customers@pittsstopauto.com."
+      description="Contact Pitts Stop Auto in Pittsburgh, PA: 4734 Baum Blvd, (412) 682-5255, customers@pittsstopauto.com."
     >
       <PageIntro
         eyebrow="Contact / 01"
@@ -1208,7 +1208,7 @@ function ContactPage() {
                 <MapPin className="shrink-0 text-primary" size={20} />
                 <div>
                   <p className="eyebrow mb-1 text-foreground">Address</p>
-                  <p className="text-muted-foreground">4740 Baum Blvd, Pittsburgh PA 15213</p>
+                  <p className="text-muted-foreground">4734 Baum Blvd, Pittsburgh PA 15213</p>
                 </div>
               </div>
               <div className="flex gap-4">
@@ -1265,7 +1265,7 @@ function ContactPage() {
                 <Mail size={14} /> Email Us
               </a>
               <a
-                href="https://www.google.com/maps/dir/?api=1&destination=4740+Baum+Blvd,+Pittsburgh+PA+15213"
+                href="https://www.google.com/maps/dir/?api=1&destination=4734+Baum+Blvd,+Pittsburgh+PA+15213"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="focus-ring inline-flex items-center gap-2 border border-white/20 px-4 py-3 text-xs font-bold uppercase tracking-[.12em] text-foreground hover:border-primary hover:bg-primary/10 transition-colors"
