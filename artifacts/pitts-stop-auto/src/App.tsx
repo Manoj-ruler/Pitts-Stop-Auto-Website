@@ -40,7 +40,7 @@ import whatsappImg from './assets/whatsapp.png';
 
 const queryClient = new QueryClient();
 type Theme = 'dark' | 'light';
-const ThemeContext = createContext<{ theme: Theme; toggle: () => void }>({ theme: 'dark', toggle: () => undefined });
+const ThemeContext = createContext<{ theme: Theme; toggle: () => void }>({ theme: 'light', toggle: () => undefined });
 
 type HotspotId = 'brakes' | 'engine' | 'diagnostics';
 
@@ -278,7 +278,7 @@ function FloatingWhatsApp() {
         className="group relative flex items-center justify-center focus-ring rounded-full transition-all duration-300 hover:scale-110 active:scale-95"
         data-testid="link-floating-whatsapp"
       >
-        <span className="pointer-events-none absolute right-full mr-3 hidden whitespace-nowrap rounded-md bg-[#111416]/95 border border-white/15 px-3 py-1.5 text-xs font-semibold text-white shadow-xl backdrop-blur-md opacity-0 group-hover:opacity-100 sm:inline-block transition-opacity duration-200">
+        <span className="pointer-events-none absolute right-full mr-3 hidden whitespace-nowrap rounded-md bg-neutral-900 border border-neutral-700 px-3 py-1.5 text-xs font-semibold text-white shadow-xl backdrop-blur-md opacity-0 group-hover:opacity-100 sm:inline-block transition-opacity duration-200">
           Chat with us on WhatsApp · (412) 682-5255
         </span>
         <span className="absolute -inset-1 rounded-full bg-[#25D366] opacity-35 blur-md group-hover:opacity-75 transition-opacity animate-pulse" />
@@ -392,19 +392,19 @@ function HotspotBay() {
         className="absolute inset-0 h-full w-full object-cover object-center opacity-80"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-[#090b0c] via-transparent to-[#090b0c]/20" />
-      <div className="absolute left-5 top-5 flex items-center gap-2 border border-white/20 bg-black/40 px-3 py-2 backdrop-blur-sm">
+      <div className="absolute left-5 top-5 flex items-center gap-2 border border-white/30 bg-black/70 px-3 py-2 backdrop-blur-sm shadow-md">
         <span className="h-2 w-2 rounded-full bg-primary animate-pulse-dot" />
-        <span className="font-mono-ui text-[10px] uppercase tracking-[.14em] text-foreground">Inspection bay / live view</span>
+        <span className="font-mono-ui text-[10px] uppercase tracking-[.14em] text-white">Inspection bay / live view</span>
       </div>
       {Object.entries(spots).map(([id, spot]) => (
         <button
           key={id}
           type="button"
           onClick={() => setSelected(id as HotspotId)}
-          className={`focus-ring absolute grid h-10 w-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border text-foreground transition-all ${
+          className={`focus-ring absolute grid h-10 w-10 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border transition-all ${
             selected === id
-              ? 'scale-110 border-accent bg-accent text-accent-foreground'
-              : 'border-white/70 bg-black/50 hover:border-accent hover:bg-accent/90 hover:text-accent-foreground'
+              ? 'scale-110 border-accent bg-accent text-accent-foreground ring-4 ring-accent/30'
+              : 'border-white/80 bg-black/70 text-white hover:border-accent hover:bg-accent hover:text-accent-foreground'
           }`}
           style={{ left: spot.x, top: spot.y }}
           aria-label={`Show ${spot.title}`}
@@ -414,12 +414,12 @@ function HotspotBay() {
           {spot.icon}
         </button>
       ))}
-      <div className="absolute bottom-0 left-0 right-0 border-t border-white/15 bg-[#0b0d0e]/90 p-5 backdrop-blur-sm sm:p-6">
+      <div className="absolute bottom-0 left-0 right-0 border-t border-white/15 bg-[#0b0d0e]/95 p-5 backdrop-blur-sm sm:p-6">
         <div className="flex items-start gap-4">
-          <span className="mt-1 text-accent">{active.icon}</span>
+          <span className="mt-1 text-primary">{active.icon}</span>
           <div>
-            <p className="eyebrow mb-2 text-accent">Selected inspection point</p>
-            <h3 className="font-display text-2xl uppercase tracking-[.03em]">{active.title}</h3>
+            <p className="eyebrow mb-2 text-primary font-semibold">Selected inspection point</p>
+            <h3 className="font-display text-2xl uppercase tracking-[.03em] text-foreground">{active.title}</h3>
             <p className="mt-1 max-w-xl text-sm leading-6 text-muted-foreground">{active.copy}</p>
           </div>
         </div>
@@ -709,25 +709,29 @@ function HomePage() {
 
 function CtaBand() {
   return (
-    <section className="border-t border-primary/30 bg-primary px-5 py-12 text-primary-foreground lg:px-10 lg:py-16">
+    <section className="border-t border-primary/30 bg-primary px-5 py-12 text-white lg:px-10 lg:py-16">
       <div className="mx-auto flex max-w-[1320px] flex-col items-start justify-between gap-8 md:flex-row md:items-center">
         <div>
-          <p className="eyebrow mb-3 text-primary-foreground/70">Pitts Stop Auto · Car Care Center</p>
-          <h2 className="font-display text-5xl uppercase leading-[.88] sm:text-6xl">
+          <p className="eyebrow mb-3 !text-white/85">Pitts Stop Auto · Car Care Center</p>
+          <h2 className="font-display text-5xl uppercase leading-[.88] sm:text-6xl text-white">
             Professional Care.<br />Personal Service.
           </h2>
         </div>
         <div className="flex flex-col sm:flex-row gap-3">
           <a
             href="tel:+14126825255"
-            className="focus-ring inline-flex items-center gap-2 border border-white/40 bg-white/10 px-5 py-4 text-[11px] font-bold uppercase tracking-[.12em] text-white hover:bg-white hover:text-black transition-colors"
+            className="focus-ring inline-flex items-center gap-2 border border-white/40 bg-white/15 px-5 py-4 text-[11px] font-bold uppercase tracking-[.12em] text-white hover:bg-white hover:text-black transition-colors"
             data-testid="link-cta-phone"
           >
             <Phone size={15} /> (412) 682-5255
           </a>
-          <ButtonLink href="/contact#estimate" variant="outline" testId="link-cta-estimate">
-            Request an estimate
-          </ButtonLink>
+          <Link
+            href="/contact#estimate"
+            className="focus-ring inline-flex items-center justify-center gap-3 border border-white/40 bg-black/20 px-5 py-4 text-[11px] font-bold uppercase tracking-[.12em] text-white hover:bg-white hover:text-black transition-all"
+            data-testid="link-cta-estimate"
+          >
+            Request an estimate <ArrowRight size={15} />
+          </Link>
         </div>
       </div>
     </section>
@@ -1433,16 +1437,19 @@ function Router() {
 
 function App() {
   const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === 'undefined') return 'dark';
+    if (typeof window === 'undefined') return 'light';
     const previewTheme = new URLSearchParams(window.location.search).get('theme');
     if (previewTheme === 'light' || previewTheme === 'dark') return previewTheme;
-    return window.localStorage.getItem('pitts-stop-theme') === 'light' ? 'light' : 'dark';
+    const stored = window.localStorage.getItem('pitts-stop-theme-v2');
+    if (stored === 'dark' || stored === 'light') return stored;
+    return 'light';
   });
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark');
     document.documentElement.classList.toggle('light', theme === 'light');
     document.documentElement.style.colorScheme = theme;
+    window.localStorage.setItem('pitts-stop-theme-v2', theme);
     window.localStorage.setItem('pitts-stop-theme', theme);
   }, [theme]);
 

@@ -71,20 +71,22 @@
 
 .light {
   --background: 38 24% 96%;
-  --foreground: 220 14% 12%;
-  --border: 220 12% 80%;
+  --foreground: 220 18% 10%;
+  --border: 220 12% 82%;
   --input: 0 0% 100%;
-  --card: 38 25% 99%;
-  --card-foreground: 220 14% 12%;
-  --card-border: 220 12% 80%;
-  --popover: 38 25% 99%;
-  --popover-foreground: 220 14% 12%;
-  --popover-border: 220 12% 80%;
-  --secondary: 38 16% 90%;
-  --secondary-foreground: 220 14% 12%;
-  --muted: 38 16% 91%;
-  --muted-foreground: 220 8% 38%;
-  --accent: 39 86% 43%;
+  --card: 0 0% 100%;
+  --card-foreground: 220 18% 10%;
+  --card-border: 220 12% 82%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 220 18% 10%;
+  --popover-border: 220 12% 82%;
+  --primary: 4 78% 52%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 38 18% 90%;
+  --secondary-foreground: 220 18% 10%;
+  --muted: 38 18% 91%;
+  --muted-foreground: 220 12% 35%;
+  --accent: 32 95% 36%;
   --accent-foreground: 0 0% 100%;
   --elevate-1: rgba(0, 0, 0, .04);
   --elevate-2: rgba(0, 0, 0, .08);
@@ -98,14 +100,22 @@
     background-image: radial-gradient(circle at 15% 0%, rgba(155, 34, 26, .10), transparent 34rem), linear-gradient(180deg, hsl(220 14% 8%), hsl(220 14% 6%));
     transition: background-color .25s ease, color .25s ease;
   }
-  .light body { background-image: radial-gradient(circle at 15% 0%, rgba(215, 25, 32, .08), transparent 34rem), linear-gradient(180deg, hsl(38 24% 96%), hsl(38 20% 93%)); }
+  .light body { background-image: radial-gradient(circle at 15% 0%, rgba(215, 25, 32, .06), transparent 34rem), linear-gradient(180deg, hsl(38 24% 96%), hsl(38 20% 93%)); }
   ::selection { background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
 }
 
 @layer utilities {
   .font-display { font-family: 'Barlow Condensed', sans-serif; }
   .font-mono-ui { font-family: 'DM Mono', monospace; }
-  .eyebrow { font-family: 'DM Mono', monospace; font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; color: hsl(var(--muted-foreground)); }
+  .eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: .68rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+  }
+  .eyebrow:not([class*="text-"]) {
+    color: hsl(var(--muted-foreground));
+  }
   .grid-texture {
     background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
     background-size: 28px 28px;
@@ -119,16 +129,16 @@
 .light [class~="border-white/20"] { border-color: hsl(var(--border)); }
 .light [class~="border-white/70"] { border-color: hsl(var(--foreground) / .48); }
 .light [class~="bg-[#111416]"],
-.light [class~="bg-[#15191b]"] { background-color: hsl(38 20% 92%); }
-.light [class~="bg-[#0b0d0e]/90"] { background-color: hsl(38 24% 97% / .92); }
+.light [class~="bg-[#15191b]"] { background-color: hsl(0 0% 100%); }
+.light [class~="bg-[#0b0d0e]/90"],
+.light [class~="bg-[#0b0d0e]/95"] { background-color: hsl(0 0% 100% / .96); }
 .light [class~="bg-[#0d1011]"] { background-color: hsl(0 0% 100%); }
-.light [class~="bg-[hsl(220_14%_8%/.92)]"] { background-color: hsl(38 24% 96% / .92); }
-.light [class~="bg-[hsl(220_14%_5%/.96)]"] { background-color: hsl(38 20% 94% / .97); }
-.light [class~="bg-[hsl(220_14%_6%)]"] { background-color: hsl(38 20% 92%); }
-.light [class~="text-white/[.025]"] { color: hsl(var(--foreground) / .06); }
-.light [class~="text-white/30"] { color: hsl(var(--foreground) / .32); }
-.light [class~="bg-black/40"] { background-color: hsl(220 14% 8% / .48); }
-.light [class~="bg-black/50"] { background-color: hsl(220 14% 8% / .58); }
+.light [class~="bg-[hsl(220_14%_8%/.92)]"] { background-color: hsl(38 24% 96% / .94); }
+.light [class~="bg-[hsl(220_14%_5%/.96)]"] { background-color: hsl(38 20% 94% / .98); }
+.light [class~="bg-[hsl(220_14%_6%)]"] { background-color: hsl(38 18% 92%); }
+.light [class~="text-white/[.025]"] { color: hsl(var(--foreground) / .05); }
+.light [class~="text-white/30"] { color: hsl(var(--foreground) / .45); }
+.light [class~="bg-white/5"] { background-color: hsl(0 0% 100%); }
 
 @keyframes rise { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
 @keyframes scan { from { transform: translateY(-120%); } to { transform: translateY(300%); } }
