@@ -1,5 +1,4 @@
 import { createContext, type FormEvent, type ReactNode, useContext, useEffect, useState } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -52,7 +51,6 @@ import {
   ScrollToTop,
 } from './components/motion';
 
-const queryClient = new QueryClient();
 type Theme = 'dark' | 'light';
 const ThemeContext = createContext<{ theme: Theme; toggle: () => void }>({ theme: 'light', toggle: () => undefined });
 
@@ -1722,14 +1720,12 @@ function App() {
 
   return (
     <ThemeContext.Provider value={{ theme, toggle: () => setTheme((current) => (current === 'dark' ? 'light' : 'dark')) }}>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
-            <Router />
-          </WouterRouter>
-          <Toaster />
-        </TooltipProvider>
-      </QueryClientProvider>
+      <TooltipProvider>
+        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+          <Router />
+        </WouterRouter>
+        <Toaster />
+      </TooltipProvider>
     </ThemeContext.Provider>
   );
 }

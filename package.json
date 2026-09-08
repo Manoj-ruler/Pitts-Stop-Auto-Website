@@ -1,22 +1,16 @@
 {
-  "name": "workspace",
+  "name": "pitts-stop-auto-website",
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
     "dev": "pnpm --filter @workspace/pitts-stop-auto run dev",
     "start": "pnpm --filter @workspace/pitts-stop-auto run dev",
     "serve": "pnpm --filter @workspace/pitts-stop-auto run serve",
-    "preinstall": "npx --yes only-allow pnpm",
-    "build": "pnpm run typecheck && pnpm -r --if-present run build",
-    "typecheck:libs": "tsc --build",
-    "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck"
+    "build": "pnpm --filter @workspace/pitts-stop-auto run build",
+    "typecheck": "pnpm --filter @workspace/pitts-stop-auto run typecheck"
   },
   "private": true,
-  "dependencies": {
-    "@replit/connectors-sdk": "^0.4.1"
-  },
   "devDependencies": {
-    "prettier": "^3.9.6",
     "typescript": "~5.9.3"
   }
 }
