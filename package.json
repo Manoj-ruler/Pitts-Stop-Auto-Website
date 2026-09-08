@@ -6,6 +6,7 @@
     "dev": "pnpm --filter @workspace/pitts-stop-auto run dev",
     "start": "pnpm --filter @workspace/pitts-stop-auto run dev",
     "serve": "pnpm --filter @workspace/pitts-stop-auto run serve",
+    "preview": "pnpm --filter @workspace/pitts-stop-auto run serve",
     "build": "pnpm --filter @workspace/pitts-stop-auto run build",
     "typecheck": "pnpm --filter @workspace/pitts-stop-auto run typecheck"
   },
