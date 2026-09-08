@@ -131,7 +131,7 @@ function Header() {
           </nav>
           <div className="hidden items-center gap-3 lg:flex">
             <span className="hidden xl:inline-flex items-center gap-1.5 text-[11px] font-medium text-muted-foreground border border-white/10 px-3 py-2.5">
-              <Clock3 size={13} className="text-primary" /> Mon–Fri 8AM–6PM
+              <Clock3 size={13} className="text-primary" /> Mon–Fri 8AM–6PM · Sat 10AM–4PM
             </span>
             <button
               type="button"
@@ -270,7 +270,8 @@ function Footer() {
                 <Clock3 size={13} className="text-primary" /> Operating Hours
               </p>
               <p className="text-muted-foreground">Mon – Fri: <span className="text-foreground font-medium">8:00 AM – 6:00 PM</span></p>
-              <p className="text-muted-foreground">Sat & Sun: <span className="text-foreground font-medium">Closed</span></p>
+              <p className="text-muted-foreground">Saturday: <span className="text-foreground font-medium">10:00 AM – 4:00 PM</span></p>
+              <p className="text-muted-foreground">Sunday: <span className="text-foreground font-medium">Closed</span></p>
             </div>
             <p>Telephone: <a href="tel:+14126825255" className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline" data-testid="link-footer-phone">(412) 682-5255</a></p>
             <p>Fax: <span className="text-foreground">(412) 682-5252</span></p>
@@ -571,7 +572,7 @@ function SpecialsModal({
         <div className="mt-5 border-t border-border pt-5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-xs text-muted-foreground text-center sm:text-left">
             <span className="font-semibold text-foreground block">Pitts Stop Auto · 4734 Baum Blvd, Pittsburgh PA</span>
-            <span>Mon–Fri: 8:00 AM – 6:00 PM · Closed Sat & Sun</span>
+            <span>Mon–Fri: 8:00 AM – 6:00 PM · Sat: 10:00 AM – 4:00 PM · Sun: Closed</span>
           </div>
           <div className="flex flex-wrap gap-2.5 w-full sm:w-auto justify-center sm:justify-end">
             <a
@@ -808,7 +809,8 @@ function HomePage() {
                     <div>
                       <span className="font-semibold text-foreground block">Shop Hours</span>
                       <p>Mon – Fri: <span className="text-foreground font-medium">8:00 AM – 6:00 PM</span></p>
-                      <p>Sat & Sun: <span className="text-foreground font-medium">Closed</span></p>
+                      <p>Saturday: <span className="text-foreground font-medium">10:00 AM – 4:00 PM</span></p>
+                      <p>Sunday: <span className="text-foreground font-medium">Closed</span></p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -1216,7 +1218,7 @@ function WhyUsPage() {
   const faqs = [
     [
       'What are your shop operating hours?',
-      'Pitts Stop Auto is open Monday through Friday from 8:00 AM to 6:00 PM. We are closed on Saturday and Sunday.',
+      'Pitts Stop Auto is open Monday through Friday from 8:00 AM to 6:00 PM, and Saturday from 10:00 AM to 4:00 PM. We are closed on Sunday.',
     ],
     [
       'What car makes and models do you service?',
@@ -1579,7 +1581,8 @@ function ContactPage() {
                 <div>
                   <p className="eyebrow mb-1 text-foreground">Shop Hours</p>
                   <p className="text-muted-foreground">Monday – Friday: <span className="text-foreground font-medium">8:00 AM – 6:00 PM</span></p>
-                  <p className="text-muted-foreground">Saturday – Sunday: <span className="text-foreground font-medium">Closed</span></p>
+                  <p className="text-muted-foreground">Saturday: <span className="text-foreground font-medium">10:00 AM – 4:00 PM</span></p>
+                  <p className="text-muted-foreground">Sunday: <span className="text-foreground font-medium">Closed</span></p>
                 </div>
               </div>
               <div className="flex gap-4">
