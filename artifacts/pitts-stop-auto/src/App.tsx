@@ -273,7 +273,7 @@ function Footer() {
             </div>
             <p>Telephone: <a href="tel:+14126825255" className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline" data-testid="link-footer-phone">(412) 682-5255</a></p>
             <p>Fax: <span className="text-foreground">(412) 682-5252</span></p>
-            <p>Email: <a href="mailto:customers@pittsstopauto.com" className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline" data-testid="link-footer-email">customers@pittsstopauto.com</a></p>
+            <p>Email: <a href="mailto:pittsstopauto@gmail.com" className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline" data-testid="link-footer-email">pittsstopauto@gmail.com</a></p>
           </div>
           <a
             href="tel:+14126825255"
@@ -831,8 +831,8 @@ function HomePage() {
                     <Mail className="mt-0.5 shrink-0 text-primary" size={18} />
                     <div>
                       <span className="font-semibold text-foreground block">Email</span>
-                      <a href="mailto:customers@pittsstopauto.com" className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline">
-                        customers@pittsstopauto.com
+                      <a href="mailto:pittsstopauto@gmail.com" className="text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline">
+                        pittsstopauto@gmail.com
                       </a>
                     </div>
                   </div>
@@ -1203,7 +1203,7 @@ function ServicesPage() {
             </a>
           </div>
           <p className="mt-4 text-xs uppercase tracking-wider text-muted-foreground">
-            4734 Baum Blvd, Pittsburgh PA 15213 · customers@pittsstopauto.com
+            4734 Baum Blvd, Pittsburgh PA 15213 · pittsstopauto@gmail.com
           </p>
         </ScrollReveal>
       </section>
@@ -1252,7 +1252,7 @@ function WhyUsPage() {
     ],
     [
       'How do I contact the shop or request service?',
-      'You can call us directly at (412) 682-5255, email us at customers@pittsstopauto.com, or submit an estimate request online.',
+      'You can call us directly at (412) 682-5255, email us at pittsstopauto@gmail.com, or submit an estimate request online.',
     ],
   ];
 
@@ -1390,7 +1390,7 @@ function EstimateForm() {
         `Service / Diagnostic Needed:\n${form.message.trim()}\n\n` +
         `Best regards,\n${form.name.trim()}`
       );
-      const mailtoUrl = `mailto:customers@pittsstopauto.com?subject=${subject}&body=${body}`;
+      const mailtoUrl = `mailto:pittsstopauto@gmail.com?subject=${subject}&body=${body}`;
       setLastMailto(mailtoUrl);
       setSubmitted(true);
       window.location.href = mailtoUrl;
@@ -1406,7 +1406,7 @@ function EstimateForm() {
         <p className="eyebrow mb-3 text-accent">Request prepared</p>
         <h3 className="font-display text-4xl uppercase">Thank you, {form.name}.</h3>
         <p className="mt-4 max-w-md text-sm leading-7 text-muted-foreground">
-          We have generated your pre-filled inquiry addressed to <a href="mailto:customers@pittsstopauto.com" className="font-semibold text-foreground underline">customers@pittsstopauto.com</a>. Your email client should open automatically.
+          We have generated your pre-filled inquiry addressed to <a href="mailto:pittsstopauto@gmail.com" className="font-semibold text-foreground underline">pittsstopauto@gmail.com</a>. Your email client should open automatically.
         </p>
         <p className="mt-2 max-w-md text-sm leading-7 text-muted-foreground">
           If your email app did not open automatically, click the button below to launch it directly, or call us at <a href="tel:+14126825255" className="text-foreground underline font-semibold">(412) 682-5255</a>.
@@ -1543,7 +1543,7 @@ function ContactPage() {
   return (
     <PageFrame
       title="Contact Us"
-      description="Contact Pitts Stop Auto in Pittsburgh, PA: 4734 Baum Blvd, (412) 682-5255, customers@pittsstopauto.com."
+      description="Contact Pitts Stop Auto in Pittsburgh, PA: 4734 Baum Blvd, (412) 682-5255, pittsstopauto@gmail.com."
     >
       <PageIntro
         eyebrow="Contact / 01"
@@ -1608,11 +1608,11 @@ function ContactPage() {
                 <div>
                   <p className="eyebrow mb-1 text-foreground">Email</p>
                   <a
-                    href="mailto:customers@pittsstopauto.com"
+                    href="mailto:pittsstopauto@gmail.com"
                     className="focus-ring font-semibold text-foreground hover:text-primary transition-colors underline-offset-4 hover:underline"
                     data-testid="link-contact-email"
                   >
-                    customers@pittsstopauto.com
+                    pittsstopauto@gmail.com
                   </a>
                 </div>
               </div>
@@ -1645,7 +1645,7 @@ function ContactPage() {
                 <Phone size={14} /> Call Us
               </a>
               <a
-                href="mailto:customers@pittsstopauto.com"
+                href="mailto:pittsstopauto@gmail.com"
                 className="focus-ring inline-flex items-center gap-2 border border-border px-4 py-3 text-xs font-bold uppercase tracking-[.12em] text-foreground hover:border-primary hover:bg-primary/10 transition-colors"
                 data-testid="link-action-email"
               >
